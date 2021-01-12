@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LibSampleRate-JS</title>
+	<script src="https://cdn.jsdelivr.net/npm/wavefile"></script>
+	<script src="../../dist/libsamplerate.js"></script>
+
+</head>
+<body>
+	<input type="file" accept="audio" id="input"/>
+	<select name="Output Sample Rate" id="sample-rate">
+		<option value="null">Select Output Sample Rate</option>
+		<option value="44100">44100</option>
+		<option value="48000">48000</option>
+		<option value="88200">88200</option>
+		<option value="96000">96000</option>
+	</select>
+	<button id="resample">Resample</button>
+	<button id="play">Play Resampled Audio</button>
+	<p id="msg"></p>
+
+	<script>
+		let sr = document.getElementById('sample-rate');
+		let input = document.getElementById('input');
+		let resample = document.getElementById('resample');
+		let msg = document.getElementById('msg');
+		let samples, nChannels, inputSampleRate, resampled;
+		let outputSampleRate = 'null';
+
+		// load a .wav file
+		let reader = new FileReader();
+		reader.onload = function(e) {
+			// create a WaveFile object + get meta information
+			let safariFixed = e.target.result.split('base64,')[1];
+			let wav = new wavefile.WaveFile();
+			wav.fromBase64(safariFixed);
+
+			nChannels = wav.fmt.numChannels;
+			sampleRate = wav.fmt.sampleRate;
+
+			// get the raw samples, then convert to Float32 where -1 < sample < 1
+			samples = wav.getSamples(true, Int16Array);
+			let float32 = new Float32Array(samples);
+
+			for (let i = 0; i < samples.length; i++) {
+				float32[i] = samples[i] / 32767;
+			}
+
+			samples = float32;
+		}
+		input.onchange = (e) => reader.readAsDataURL(e.target.files[0]);
+		sr.onchange = (e) => outputSampleRate = e.target.value;
+
+		resample.onclick = () => {
+			msg.innerHTML = '';
+			if (outputSampleRate === 'null') msg.innerHTML = 'You need to the set the output sample rate';
+			if (samples === undefined) msg.innerHTML = 'You need to pick a .wav file';
+
+			// init sample rate converter
+			LibSampleRate.create(LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY, nChannels, sampleRate, parseInt(outputSampleRate))
+				.then((src) => {
+					let time = Date.now();
+					resampled = src.simple(samples);
+
+					msg.innerHTML = 'Converted to ' + resampled.length + ' samples in ' + (Date.now() - time) + ' ms';
+				});
+		}
+
+		play.onclick = () => {
+			// init audio ctx
+			let AudioCtx = window.AudioContext || window.webkitAudioContext;
+			let context = new AudioCtx({sampleRate: parseInt(outputSampleRate)});
+			let buff = context.createBuffer(nChannels, resampled.length / nChannels, parseInt(outputSampleRate));
+
+			// get the channels
+			let chans = [];
+			for (let i = 0; i < nChannels; i++) {
+				chans.push(buff.getChannelData(i));
+			}
+
+			// fill channels with the resampled audio
+			let chanPos = 0;
+			for (let i = 0; i < resampled.length; i += nChannels) {
+				for (let j = 0; j < nChannels; j++) {
+					chans[j][chanPos] = resampled[i+j];
+				}
+				chanPos++;
+			}
+
+			// start audio
+			let buffSource = context.createBufferSource();
+			buffSource.buffer = buff;
+			buffSource.connect(context.destination);
+			buffSource.start();
+		}
+		
+
+	</script>
+</body>
+</html>

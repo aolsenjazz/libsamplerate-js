@@ -1,0 +1,60 @@
+{
+  "name": "libsamplerate-js",
+  "version": "1.0.0",
+  "description": "Resample audio in-browser using a web assembly port of libsamplerate",
+  "keywords": [
+    "web assembly",
+    "wasm",
+    "libsamplerate",
+    "sample rate",
+    "resample",
+    "resampler",
+    "web audio",
+    "audio",
+    "sample rate converter",
+    "src",
+    "dsp",
+  ],
+  "main": "./dist/libsamplerate.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js",
+    "compile-wasm": "emcc --bind -o src/wasm-src.js src/wasm-src.cpp lib/libsamplerate.a -s MODULARIZE -s EXPORT_NAME='LoadSRC' -s ENVIRONMENT='web' -s ALLOW_MEMORY_GROWTH='1' -O3",
+    "watch-js": "nodemon --watch src --exec \"npx webpack --config webpack.config.js\"",
+    "watch-cpp": "nodemon --watch src/*.cpp --watch src/*.h --exec \"npm run compile-wasm\"",
+    "watch-benchmarks": "nodemon --watch benchmarks/src --exec \"cd benchmarks; npx webpack --config webpack.config.js\"",
+    "watch-worker": "nodemon --watch examples/worker/src --exec \"cd examples/worker; npx webpack --config webpack.config.js\"",
+    "test": "jest"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/*.js"
+    ],
+    "coveragePathIgnorePatterns": [
+      "wasm-src.js"
+    ]
+  },
+  "author": "Alexander Olsen",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-polyfill": "^6.26.0",
+    "copy-webpack-plugin": "^7.0.0",
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.1",
+    "wavefile": "^11.0.0",
+    "webpack": "^5.12.1",
+    "webpack-cli": "^4.3.1",
+    "worker-loader": "^3.0.7"
+  }
+}

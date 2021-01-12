@@ -1,7 +1,7 @@
 {
   "name": "libsamplerate-js",
   "version": "1.0.0",
-  "description": "Resample audio in-browser using a web assembly port of libsamplerate",
+  "description": "Resample audio in-browser using a web assembly port of libsamplerate.",
   "keywords": [
     "web assembly",
     "wasm",
@@ -36,6 +36,8 @@
       "wasm-src.js"
     ]
   },
+  "homepage": "https://github.com/aolsenjazz/libsamplerate-js",
+  "bugs": "https://github.com/aolsenjazz/libsamplerate-js/issues",
   "author": "Alexander Olsen",
   "license": "ISC",
   "dependencies": {},

@@ -3,8 +3,8 @@
 libsamplerate-js is a port of [libsamplerate](http://www.mega-nerd.com/SRC/) to WASM exposed through a simple JS API for use in-browser. The [simple](http://www.mega-nerd.com/SRC/api_simple.html) and [full](http://www.mega-nerd.com/SRC/api_full.html) APIs are available.
 
 #### Features:
-- 0-∞ channels
-- 0-192000 sample rates
+- 1-∞ channels
+- 1-192000 sample rates
 - libsamplerate Full and Simple APIs
 - See the [libsamplerate docs]() for much more (and better) info
 
@@ -18,7 +18,7 @@ Then place the WASM code located at */node_modules/libsamplerate-js/wasm-src.was
 
 ## Usage
 
-libsamplerate-js expects Float32Array mono or multi-channel interleaved data, where each sample is -1 < sample < 1.
+libsamplerate-js expects to receive Float32Array mono or multi-channel interleaved data, where each sample is -1 < sample < 1.
 
 ### In modules:
 ```javascript
@@ -33,6 +33,7 @@ create(converterType, nChannels, inputSampleRate, ouputSampleRate)
 	.then((src) => {
 		let data = new Float32Array(44100);
 		let resampledData = src.simple(data);
+		src.destroy(); // clean up
 	});
 ```
 or
@@ -48,6 +49,7 @@ LibSampleRate.create(converterType, nChannels, inputSampleRate, ouputSampleRate)
 	.then((src) => {
 		let data = new Float32Array(44100);
 		let resampledData = src.full(data);
+		src.destroy(); // clean up
 	});
 ```
 
@@ -64,6 +66,7 @@ LibSampleRate.create(converterType, nChannels, inputSampleRate, ouputSampleRate)
 		.then((src) => {
 				var data = new Float32Array(44100);
 				let resampledData = src.full(data);
+				src.destroy(); // clean up
 			});
 </script>
 ```
@@ -71,6 +74,10 @@ Or use the libsamplerate.js file in the *dist* folder:
 ```html
 <script src="libsamplerate.js"></script>
 ```
+
+## API Reference
+
+
 
 ## Building From Source
 
@@ -87,7 +94,7 @@ Production files are placed in the *dist* directory, and the WASM code required 
 
 ## Examples
 
-Run any server ([http-server](https://www.npmjs.com/package/http-server), etc) from the root directory:
+First, **build from source**. Then run any server ([http-server](https://www.npmjs.com/package/http-server), etc) from the root directory:
 ```bash
 cd libsamplerate-js
 http-server
@@ -102,6 +109,9 @@ cd libsamplerate-js
 http-server
 ```
 and visit *localhost:8080/benchmarks*. A minimalistic UI is provided to test different batch sizes, APIs, sample rates, and `ConverterType`s.
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
 

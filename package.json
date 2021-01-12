@@ -39,7 +39,7 @@
   "homepage": "https://github.com/aolsenjazz/libsamplerate-js",
   "bugs": "https://github.com/aolsenjazz/libsamplerate-js/issues",
   "author": "Alexander Olsen",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.10",

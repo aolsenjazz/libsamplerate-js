@@ -23,9 +23,9 @@ export const ConverterType = {
  */
 export function create(converterType=-1, nChannels=-1, inputSampleRate=-1, outputSampleRate=-1) {
 	if (ConverterType.SRC_SINC_BEST_QUALITY > converterType || ConverterType.SRC_LINEAR < converterType) throw 'invalid converterType submitted';
-	if (nChannels < 0 || nChannels > 8) throw 'invalid nChannels submitted';
-	if (inputSampleRate < 0 || inputSampleRate > 192000) throw 'invalid inputSampleRate';
-	if (outputSampleRate < 0 || outputSampleRate > 192000) throw 'invalid outputSampleRate';
+	if (nChannels < 1 || nChannels > 8) throw 'invalid nChannels submitted';
+	if (inputSampleRate < 1 || inputSampleRate > 192000) throw 'invalid inputSampleRate';
+	if (outputSampleRate < 1 || outputSampleRate > 192000) throw 'invalid outputSampleRate';
 
 	return new Promise((resolve, reject) => {
 		LoadSRC()

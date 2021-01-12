@@ -8,7 +8,7 @@ Install using NPM:
 ```bash
 npm i libsamplerate-js
 ```
-Then place the WASM code located at /node_modules/libsamplerate-js/wasm-src.wasm into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.**
+Then place the WASM code located at */node_modules/libsamplerate-js/wasm-src.wasm* into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.** Examples of this can be found in the *examples* or *benchmarks* folders.
 
 ## Usage
 
@@ -63,3 +63,24 @@ Or use the libsamplerate.js file in the *dist* folder:
 ```html
 <script src="libsamplerate.js"></script>
 ```
+
+## Building From Source
+
+To build and compile the JS + WASM resources from source, run:
+
+```bash
+git clone https://github.com/aolsenjazz/libsamplerate-js
+cd libsamplerate-js
+npm run compile-wasm
+npm run build
+```
+
+Production files are placed in the *dist* directory, and the WASM code required in examples/benchmarks is automatically copied to their respective directories.
+
+## Examples
+
+Run any http server ([http-server](https://www.npmjs.com/package/http-server), etc) from the root directory:
+```bash
+http-server
+```
+and visit *localhost:8080/examples/basic* or *localhost:8080/examples/worker* in a browser. Examples and benchmarks **must be** hosted from the root directory, as they need to access *dist/libsamplerate.js*.

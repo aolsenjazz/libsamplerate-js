@@ -8,3 +8,4 @@ examples/worker/main.worker.js
 node_modules
 src/wasm-src.js
 **/.DS_Store
+package-lock.json

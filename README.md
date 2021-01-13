@@ -22,7 +22,7 @@ libsamplerate-js expects to receive Float32Array mono or multi-channel interleav
 
 ### In modules:
 ```javascript
-import { create, ConverterType } from 'libsamplerate-js'; 
+import { create, ConverterType } from '@alexanderolsen/libsamplerate-js'; 
 
 let converterType    = ConverterType.SRC_SINC_BEST_QUALITY;
 let nChannels        = 2;
@@ -38,7 +38,7 @@ create(converterType, nChannels, inputSampleRate, ouputSampleRate)
 ```
 or
 ```javascript
-const LibSampleRate = require('libsamplerate-js'); 
+const LibSampleRate = require('@alexanderolsen/libsamplerate-js'); 
 
 let converterType    = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
 let nChannels        = 2;
@@ -115,6 +115,18 @@ full(dataIn, dataOut=null) { ... }
  * be used again or else risk hitting a segfault in WASM code.
  */
 destroy() { ... }
+```
+
+### `ConverterType`
+Converter types are as follows. More information can be found at the [libsamplerate website](http://www.mega-nerd.com/SRC/api_misc.html#Converters).
+```javascript
+const ConverterType = {
+	SRC_SINC_BEST_QUALITY: 0,
+	SRC_SINC_MEDIUM_QUALITY: 1,
+	SRC_SINC_FASTEST: 2,
+	SRC_ZERO_ORDER_HOLD: 3,
+	SRC_LINEAR: 4
+}
 ```
 
 ## Examples

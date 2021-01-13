@@ -1,5 +1,3 @@
-import 'babel-polyfill';
-
 import LoadSRC from './wasm-src.js';
 import SRC from './src.js';
 

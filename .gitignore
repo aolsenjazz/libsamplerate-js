@@ -1,10 +1,4 @@
-benchmarks/main.js
-benchmarks/wasm-src.wasm
 coverage/
-dist/
-examples/worker/main.js
-examples/worker/wasm-src.wasm
-examples/worker/main.worker.js
 node_modules
 src/wasm-src.js
 **/.DS_Store

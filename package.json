@@ -13,7 +13,7 @@
     "audio",
     "sample rate converter",
     "src",
-    "dsp",
+    "dsp"
   ],
   "main": "./dist/libsamplerate.js",
   "directories": {
@@ -37,6 +37,7 @@
     ]
   },
   "homepage": "https://github.com/aolsenjazz/libsamplerate-js",
+  "repository": "https://github.com/aolsenjazz/libsamplerate-js",
   "bugs": "https://github.com/aolsenjazz/libsamplerate-js/issues",
   "author": "Alexander Olsen",
   "license": "MIT",

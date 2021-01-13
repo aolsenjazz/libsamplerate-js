@@ -14,7 +14,7 @@ Install using NPM:
 ```bash
 npm i @alexanderolsen/libsamplerate-js
 ```
-Then place the WASM code located at */node_modules/libsamplerate-js/wasm-src.wasm* into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.** Examples of this can be found in the *examples* or *benchmarks* directories.
+Then place the WASM code located at */node_modules/@alexanderolsen/libsamplerate-js/dist/wasm-src.wasm* into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.** Examples of this can be found in the *examples* or *benchmarks* directories.
 
 ## Usage
 

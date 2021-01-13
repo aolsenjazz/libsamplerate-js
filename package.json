@@ -1,6 +1,6 @@
 {
   "name": "@alexanderolsen/libsamplerate-js",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "Resample audio in-browser using a web assembly port of libsamplerate.",
   "keywords": [
     "web assembly",
@@ -20,15 +20,13 @@
     "test": "test"
   },
   "scripts": {
-    "build": "npx webpack --config webpack.config.js",
-    "compile-wasm": "emcc --bind -o src/wasm-src.js src/wasm-src.cpp lib/libsamplerate.a -s MODULARIZE -s EXPORT_NAME='LoadSRC' -s ENVIRONMENT='web' -s ALLOW_MEMORY_GROWTH='1' -O3",
+    "build": "npx webpack",
+    "compile-wasm": "emcc --bind -o src/glue.js src/libsamplerate-wrapper.cpp lib/libsamplerate.a -s MODULARIZE -s EXPORT_NAME='LoadSRC' -s ENVIRONMENT='web' -s ALLOW_MEMORY_GROWTH='1' -O3; mv src/glue.wasm dist/libsamplerate.wasm",
     "watch-js": "nodemon --watch src --exec \"npx webpack --config webpack.config.js\"",
     "watch-cpp": "nodemon --watch src/*.cpp --watch src/*.h --exec \"npm run compile-wasm\"",
     "watch-benchmarks": "nodemon --watch benchmarks/src --exec \"cd benchmarks; npx webpack --config webpack.config.js\"",
     "watch-worker": "nodemon --watch examples/worker/src --exec \"cd examples/worker; npx webpack --config webpack.config.js\"",
-    "test": "jest",
-    "test:coverage": "npm test -- --coverage",
-    "test:badges": "npm run test:coverage && jest-coverage-badges"
+    "test": "jest"
   },
   "jest": {
     "coverageReporters": [
@@ -40,7 +38,7 @@
       "src/*.js"
     ],
     "coveragePathIgnorePatterns": [
-      "wasm-src.js"
+      "glue.js"
     ]
   },
   "homepage": "https://github.com/aolsenjazz/libsamplerate-js",

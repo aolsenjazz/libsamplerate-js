@@ -71,7 +71,10 @@ function App() {
 			let quality = qualityForString(algorithm);
 
 			// init sample rate converter
-			create(quality, _nChannels, _inputSampleRate, _outputSampleRate)
+			create(_nChannels, _inputSampleRate, _outputSampleRate, {
+				converterType: quality,
+				wasmPath: '/dist/libsamplerate.wasm'
+			})
 				.then((src) => {
 					let testTimes = [];
 					let batch = new Float32Array(samples.buffer, 0, _batchSize);

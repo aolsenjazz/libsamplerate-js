@@ -1,5 +1,4 @@
 const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	module: {
@@ -26,13 +25,4 @@ module.exports = {
 		library: 'LibSampleRate',
 		libraryTarget: 'umd',
 	},
-	plugins: [
-		new CopyPlugin({
-			patterns: [
-				{ from: path.join(__dirname, 'src', 'wasm-src.wasm'), to: 'wasm-src.wasm' },
-				{ from: path.join(__dirname, 'src', 'wasm-src.wasm'), to: path.join(__dirname, '..', 'benchmarks', 'wasm-src.wasm') },
-				{ from: path.join(__dirname, 'src', 'wasm-src.wasm'), to: path.join(__dirname, '..', 'examples', 'worker', 'wasm-src.wasm') }
-			]
-		})
-	],
 }

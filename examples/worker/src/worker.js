@@ -22,7 +22,10 @@ onmessage = (e) => {
 
 /** load the WASM module and initialize with default values */
 function init(quality, nChannels, inputSampleRate, outputSampleRate) {
-	create(quality, nChannels, inputSampleRate, outputSampleRate)
+	create(nChannels, inputSampleRate, outputSampleRate, {
+		converterType: quality,
+		wasmPath: '/dist/libsamplerate.wasm'
+	})
 		.then((src) => {
 			_src = src;
 			postMessage({command: 'postInit'});

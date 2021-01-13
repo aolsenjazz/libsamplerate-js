@@ -14,7 +14,13 @@ Install using NPM:
 ```bash
 npm i @alexanderolsen/libsamplerate-js
 ```
-Then place the WASM code located at */node_modules/@alexanderolsen/libsamplerate-js/dist/wasm-src.wasm* into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.** Examples of this can be found in the *examples* or *benchmarks* directories.
+### Important Note On libsamplerate.wasm
+The web assembly file located at */node_modules/@alexanderolsen/libsamplerate-js/dist/libsamplerate.wasm* needs to be placed where libsamplerate-js can find it. The default location is at the root of your public directory. This location can be changed using the `wasmPath` variable in the options dict passed into `create()`:
+
+```javascript
+create(nChannels, inputSampleRate, outputSampleRate, { wasmPath: '/some/path/to/libsamplerate.wasm' });
+```
+See **Usage** or **API** for more examples and instructions.
 
 ## Usage
 
@@ -29,7 +35,10 @@ let nChannels        = 2;
 let inputSampleRate  = 44100;
 let outputSampleRate = 48000;
 
-create(converterType, nChannels, inputSampleRate, ouputSampleRate)
+create(nChannels, inputSampleRate, ouputSampleRate, {
+	converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
+	wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
+})
 	.then((src) => {
 		let data = new Float32Array(44100);
 		let resampledData = src.simple(data);
@@ -45,7 +54,10 @@ let nChannels        = 2;
 let inputSampleRate  = 44100;
 let outputSampleRate = 48000;
 
-LibSampleRate.create(converterType, nChannels, inputSampleRate, ouputSampleRate)
+LibSampleRate.create(,nChannels, inputSampleRate, ouputSampleRate, {
+	converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
+	wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
+})
 	.then((src) => {
 		let data = new Float32Array(44100);
 		let resampledData = src.full(data);
@@ -62,7 +74,10 @@ LibSampleRate.create(converterType, nChannels, inputSampleRate, ouputSampleRate)
 	var inputSampleRate  = 44100;
 	var outputSampleRate = 48000;
 
-	LibSampleRate.create(converterType, nChannels, inputSampleRate, outputSampleRate)
+	LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
+		converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
+		wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
+	})
 		.then((src) => {
 				var data = new Float32Array(44100);
 				let resampledData = src.full(data);
@@ -77,7 +92,7 @@ Or use the libsamplerate.js file in the *dist* folder:
 
 ## API Reference
 
-Once you've create the JS wrapper using `create()` or `LibSampleRate.create()`, the returned object exposes:
+Once you've created the JS wrapper using `create()` or `LibSampleRate.create()`, the returned object exposes:
 ### `simple`
 ```javascript
 /**
@@ -131,12 +146,12 @@ const ConverterType = {
 
 ## Examples
 
-Run any server ([http-server](https://www.npmjs.com/package/http-server), etc) from the root directory:
+Run any server ([http-server](https://www.npmjs.com/package/http-server), etc) from the project directory:
 ```bash
 cd libsamplerate-js
 http-server
 ```
-and visit *localhost:8080/examples/basic* or *localhost:8080/examples/worker* in a browser. Examples and benchmarks **must be** hosted from the root directory, as they need to access *dist/libsamplerate.js*.
+and visit *localhost:8080/examples/basic* or *localhost:8080/examples/worker* in a browser. Examples and benchmarks **must be** hosted from the root directory, as they need to access the files in *dist*.
 
 ## Benchmarks
 
@@ -158,7 +173,7 @@ npm run compile-wasm
 npm run build
 ```
 
-Production files are placed in the *dist* directory, and the WASM code required in *examples* and *benchmarks* is automatically copied to the respective directories.
+Production files are placed in the *dist* directory.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

@@ -1,6 +1,6 @@
 #include <emscripten/bind.h>
 
-#include "samplerate.h"
+#include "libsamplerate-headers.h"
 
 using namespace emscripten;
 

@@ -49,7 +49,7 @@ function App() {
 
 		let quality = qualityForString(algorithm);
 
-		// init the web worker. see next useEffect() block for next stepss
+		// init the web worker. see next useEffect() block for next steps
 		worker.postMessage({
 			command: 'init',
 			quality: quality,

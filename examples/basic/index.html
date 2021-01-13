@@ -57,7 +57,9 @@
 			if (samples === undefined) msg.innerHTML = 'You need to pick a .wav file';
 
 			// init sample rate converter
-			LibSampleRate.create(LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY, nChannels, sampleRate, parseInt(outputSampleRate))
+			LibSampleRate.create(nChannels, sampleRate, parseInt(outputSampleRate), {
+				wasmPath: '/dist/libsamplerate.wasm'
+			})
 				.then((src) => {
 					let time = Date.now();
 					resampled = src.simple(samples);

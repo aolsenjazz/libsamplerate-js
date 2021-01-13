@@ -89,7 +89,7 @@ test('full() w/200k samples calls src.module.full() 23 times', () => {
 	expect(spy).toHaveBeenCalledTimes(115);
 });
 
-test('destroy() call module.destroy()', () => {
+test('destroy() calls module.destroy() + sets isDestroyed to true', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -100,7 +100,27 @@ test('destroy() call module.destroy()', () => {
 	src.destroy();
 
 	expect(spy).toHaveBeenCalledTimes(1);
+	expect(src.isDestroyed).toBe(true);
 });
+
+test('call destroy() twice warns the second time', () => {
+	let nChannels = 2;
+	let converterType = 0;
+	let inputSampleRate = 44100;
+	let outputSampleRate = 48000;
+	let src = new SRC(module(), converterType, nChannels, inputSampleRate, outputSampleRate);
+
+	const consoleWarn = global.console.warn;
+	global.console = { warn: jest.fn() };
+	const spy = jest.spyOn(global.console, 'warn');
+
+	src.destroy();
+	src.destroy();
+
+	expect(spy).toHaveBeenCalledTimes(1);
+
+	global.console = {warn: consoleWarn};
+})
 
 test('calling resample with inputSr===outputSr just returns dataIn', () => {
 	let nChannels = 2;

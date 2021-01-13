@@ -110,11 +110,16 @@ test('creating SRC can\'t find the wasm file in jest & throws >.>', (done) => {
 	let inputSampleRate = 44100;
 	let outputSampleRate = 44100;
 
+	// mock the warn func. wasm glue code prints way too much info when its fails to find wasm code
+	const consoleWarn = global.console.warn;
+	global.console = { warn: jest.fn() }; 
+
 	create(converterType, nChannels, inputSampleRate, outputSampleRate)
 		.then(() => {
 			// shouldn't happen
 		})
 		.catch(() => {
 			done();
+			global.console = { warn: jest.fn() } // reset the warn fn
 		});
 });

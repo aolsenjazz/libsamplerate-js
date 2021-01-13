@@ -22,6 +22,7 @@ export default class SRC {
 		this.inputSampleRate = inputSampleRate;
 		this.outputSampleRate = outputSampleRate
 		this.ratio = outputSampleRate / inputSampleRate;
+		this.isDestroyed = false;
 
 		// init can cause heap memory to be increased, so call it before we get references to arrays below
 		module.init(nChannels, converterType, inputSampleRate, outputSampleRate);
@@ -63,7 +64,13 @@ export default class SRC {
 	 * be used again or else risk hitting a segfault in WASM code.
 	 */
 	destroy() {
-		this.module.destroy();
+		if (this.isDestroyed === true) {
+			console.warn('destroy() has already been called on this instance');
+		} else {
+			this.module.destroy();
+			this.isDestroyed = true;
+		}
+		
 	}
 
 	/**

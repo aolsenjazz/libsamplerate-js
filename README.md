@@ -117,22 +117,9 @@ full(dataIn, dataOut=null) { ... }
 destroy() { ... }
 ```
 
-## Building From Source
-
-To build and compile the JS + WASM resources from source, run:
-
-```bash
-git clone https://github.com/aolsenjazz/libsamplerate-js
-cd libsamplerate-js
-npm run compile-wasm
-npm run build
-```
-
-Production files are placed in the *dist* directory, and the WASM code required in *examples* and *benchmarks* is automatically copied to the respective directories.
-
 ## Examples
 
-First, **build from source**. Then run any server ([http-server](https://www.npmjs.com/package/http-server), etc) from the root directory:
+Run any server ([http-server](https://www.npmjs.com/package/http-server), etc) from the root directory:
 ```bash
 cd libsamplerate-js
 http-server
@@ -147,6 +134,19 @@ cd libsamplerate-js
 http-server
 ```
 and visit *localhost:8080/benchmarks*. A minimalistic UI is provided to test different batch sizes, APIs, sample rates, and `ConverterType`s.
+
+## Building From Source
+
+To build and compile the JS + WASM resources from source, run:
+
+```bash
+git clone https://github.com/aolsenjazz/libsamplerate-js
+cd libsamplerate-js
+npm run compile-wasm
+npm run build
+```
+
+Production files are placed in the *dist* directory, and the WASM code required in *examples* and *benchmarks* is automatically copied to the respective directories.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

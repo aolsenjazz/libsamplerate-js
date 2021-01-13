@@ -1,4 +1,4 @@
-import SRC from '../src/src.js';
+import SRC from 'SRC';
 
 const BUFFER_SIZE = 1008000;
 

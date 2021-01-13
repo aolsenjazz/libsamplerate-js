@@ -22,15 +22,20 @@ export const ConverterType = {
  * @param  {Number} inputSampleRate  The sample rate of whatever source audio you want to resample
  * @param  {Number} outputSampleRate If playing audio in-browser, this should be equal to AudioContext.sampleRate
  * @param  {Object} options          Additional configuration information. see above
- * @return {Promise}                  a promise containing the SRC object on resolve, or error message on error
+ * @return {Promise}                 a promise containing the SRC object on resolve, or error message on error
  */
 export function create(nChannels, inputSampleRate, outputSampleRate, options={}) {
-	if (nChannels < 1 || nChannels > 8) throw 'invalid nChannels submitted';
-	if (inputSampleRate < 1 || inputSampleRate > 192000) throw 'invalid inputSampleRate';
-	if (outputSampleRate < 1 || outputSampleRate > 192000) throw 'invalid outputSampleRate';
-
 	let cType = options.converterType === undefined ? ConverterType.SRC_SINC_FASTEST : options.converterType;
 	let wasm  = options.wasmPath || '/libsamplerate.wasm';
+
+	if (nChannels === undefined) throw 'nChannels is undefined';
+	if (inputSampleRate === undefined) throw 'inputSampleRate is undefined';
+	if (outputSampleRate === undefined) throw 'outputSampleRate is undefined';
+
+	if (nChannels < 1) throw 'invalid nChannels submitted';
+	if (inputSampleRate < 1 || inputSampleRate > 192000) throw 'invalid inputSampleRate';
+	if (outputSampleRate < 1 || outputSampleRate > 192000) throw 'invalid outputSampleRate';
+	if (cType < ConverterType.SRC_SINC_BEST_QUALITY || cType > ConverterType.SRC_LINEAR) throw 'invalid converterType';
 	
 	const overrides = {
 		locateFile: (path) => {

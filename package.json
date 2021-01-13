@@ -39,7 +39,12 @@
     ],
     "coveragePathIgnorePatterns": [
       "glue.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "glue.js": "<rootDir>/src/__mocks__/glue.js",
+      "src.js": "<rootDir>/src/__mocks__/src.js",
+      "SRC": "<rootDir>/src/src.js"
+    }
   },
   "homepage": "https://github.com/aolsenjazz/libsamplerate-js",
   "repository": "https://github.com/aolsenjazz/libsamplerate-js",

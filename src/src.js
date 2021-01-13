@@ -38,7 +38,7 @@ export default class SRC {
 	 * More (and better) info available at: http://www.mega-nerd.com/SRC/api_simple.html
 	 *
 	 * @param  {Float32Array}         dataIn  Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
-	 * @return {Float32Array}                 The resampled data. If dataOut != null, dataOut is returned
+	 * @return {Float32Array}                 The resampled data
 	 */
 	simple(dataIn) {
 		return this._resample(this.module.simple, dataIn);
@@ -51,7 +51,7 @@ export default class SRC {
 	 * More (and better) info available at: http://www.mega-nerd.com/SRC/api_full.html
 	 *
 	 * @param  {Float32Array}         dataIn  Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
-	 * @param  {Float32Array || null} dataOut Optionally, pass a Float32Array to avoid allocating an extra buffer for every resampling operation
+	 * @param  {Float32Array || null} dataOut Optionally, pass a Float32Array to avoid allocating an extra array for every resampling operation
 	 * @return {Float32Array}                 The resampled data. If dataOut != null, dataOut is returned
 	 */
 	full(dataIn, dataOut=null) {

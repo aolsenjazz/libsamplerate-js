@@ -1,11 +1,11 @@
 # libsamplerate-js
 
-libsamplerate-js is a port of [libsamplerate](http://www.mega-nerd.com/SRC/) to WASM exposed through a simple JS API for use in-browser. The [simple](http://www.mega-nerd.com/SRC/api_simple.html) and [full](http://www.mega-nerd.com/SRC/api_full.html) APIs are available.
+libsamplerate-js is a port of [libsamplerate](http://www.mega-nerd.com/SRC/) to Web Assembly exposed through a simple JS API for use in-browser. The [simple](http://www.mega-nerd.com/SRC/api_simple.html) API is ideal for resampling large pieces of audio. The [full](http://www.mega-nerd.com/SRC/api_full.html) API is ideal for quickly resampling small portions (128+ samples) of a larger piece of audio such as audio received from a Websocket or WebRTC connection.
 
 #### Features:
 - 1-∞ channels
 - 1-192000 sample rates
-- libsamplerate Full and Simple APIs
+- libsamplerate [Full](http://www.mega-nerd.com/SRC/api_full.html) and [Simple](http://www.mega-nerd.com/SRC/api_simple.html) APIs
 - See the [libsamplerate docs]() for much more (and better) info
 
 ## Installation
@@ -14,7 +14,7 @@ Install using NPM:
 ```bash
 npm i libsamplerate-js
 ```
-Then place the WASM code located at */node_modules/libsamplerate-js/wasm-src.wasm* into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.** Examples of this can be found in the *examples* or *benchmarks* folders.
+Then place the WASM code located at */node_modules/libsamplerate-js/wasm-src.wasm* into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.** Examples of this can be found in the *examples* or *benchmarks* directories.
 
 ## Usage
 
@@ -77,7 +77,45 @@ Or use the libsamplerate.js file in the *dist* folder:
 
 ## API Reference
 
+Once you've create the JS wrapper using `create()` or `LibSampleRate.create()`, the returned object exposes:
+### `simple`
+```javascript
+/**
+ * Calls the libsamplerate `simple` API. This should be used when resampling one individual chunk of audio,
+ * and no more calls to are required. If more calls are required, use the `full` API. If the array submitted
+ * is > 4MB, audio will be broken up into chunks and the `full` API will be used
+ *
+ * More (and better) info available at: http://www.mega-nerd.com/SRC/api_simple.html
+ *
+ * @param  {Float32Array}         dataIn  Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
+ * @return {Float32Array}                 The resampled data
+ */
+simple(dataIn) { ... }
+```
 
+### `full`
+```javascript
+/**
+ * Calls the libsamplerate `full` API. This should be used when resampling several chunks of the
+ * sample audio, e.g. receiving a live stream from WebRTC/websocket API.
+ *
+ * More (and better) info available at: http://www.mega-nerd.com/SRC/api_full.html
+ *
+ * @param  {Float32Array}         dataIn  Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
+ * @param  {Float32Array || null} dataOut Optionally, pass a Float32Array to avoid allocating an extra array for every esampling operation
+ * @return {Float32Array}                 The resampled data. If dataOut != null, dataOut is returned
+ */
+full(dataIn, dataOut=null) { ... }
+```
+
+### `destroy`
+```javascript
+/**
+ * Cleans up WASM SRC resources. Once this is called on an instance, that instance should not
+ * be used again or else risk hitting a segfault in WASM code.
+ */
+destroy() { ... }
+```
 
 ## Building From Source
 

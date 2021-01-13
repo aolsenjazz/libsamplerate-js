@@ -3,3 +3,4 @@ node_modules
 src/wasm-src.js
 **/.DS_Store
 package-lock.json
+.npmignore

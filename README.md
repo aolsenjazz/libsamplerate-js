@@ -12,7 +12,7 @@ libsamplerate-js is a port of [libsamplerate](http://www.mega-nerd.com/SRC/) to 
 
 Install using NPM:
 ```bash
-npm i libsamplerate-js
+npm i @alexanderolsen/libsamplerate-js
 ```
 Then place the WASM code located at */node_modules/libsamplerate-js/wasm-src.wasm* into the root of your public directory. **libsamplerate-js will fail if it is unable to find this file in the root of your public directory.** Examples of this can be found in the *examples* or *benchmarks* directories.
 
@@ -55,7 +55,7 @@ LibSampleRate.create(converterType, nChannels, inputSampleRate, ouputSampleRate)
 
 ### In HTML:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/libsamplerate-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@alexanderolsen/libsamplerate-js"></script>
 <script>
 	var converterType    = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
 	var nChannels        = 2;
@@ -137,7 +137,7 @@ and visit *localhost:8080/benchmarks*. A minimalistic UI is provided to test dif
 
 ## Building From Source
 
-To build and compile the JS + WASM resources from source, run:
+Before you can compile the WASM code you need to [download and install Empscripten](https://emscripten.org/docs/getting_started/downloads.html) and activate PATH variables for the current terminal. To build and compile the JS + WASM resources from source, run:
 
 ```bash
 git clone https://github.com/aolsenjazz/libsamplerate-js

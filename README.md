@@ -3,7 +3,7 @@
 libsamplerate-js is a port of [libsamplerate](http://www.mega-nerd.com/SRC/) to Web Assembly exposed through a simple JS API for use in-browser. The [simple](http://www.mega-nerd.com/SRC/api_simple.html) API is ideal for resampling large pieces of audio. The [full](http://www.mega-nerd.com/SRC/api_full.html) API is ideal for quickly resampling small portions (128+ samples) of a larger piece of audio such as audio received from a Websocket or WebRTC connection.
 
 #### Features:
-- 1-∞ channels
+- 1-128 channels
 - 1-192000 sample rates
 - libsamplerate [Full](http://www.mega-nerd.com/SRC/api_full.html) and [Simple](http://www.mega-nerd.com/SRC/api_simple.html) APIs
 - See the [libsamplerate docs]() for much more (and better) info
@@ -136,11 +136,11 @@ destroy() { ... }
 Converter types are as follows. More information can be found at the [libsamplerate website](http://www.mega-nerd.com/SRC/api_misc.html#Converters).
 ```javascript
 const ConverterType = {
-	SRC_SINC_BEST_QUALITY: 0,
-	SRC_SINC_MEDIUM_QUALITY: 1,
-	SRC_SINC_FASTEST: 2,
-	SRC_ZERO_ORDER_HOLD: 3,
-	SRC_LINEAR: 4
+	SRC_SINC_BEST_QUALITY: 0,   // highest quality, slowest
+	SRC_SINC_MEDIUM_QUALITY: 1, // 
+	SRC_SINC_FASTEST: 2,        // in-between
+	SRC_ZERO_ORDER_HOLD: 3,     // poor quality, "blindingly" fast
+	SRC_LINEAR: 4               // poor quality, "blindingly" fast
 }
 ```
 

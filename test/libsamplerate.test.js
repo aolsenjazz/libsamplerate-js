@@ -11,7 +11,7 @@ test('creating SRC with converterType < 0 fails', () => {
 	}).toThrow('invalid converterType')
 });
 
-test('createing SRC with nChannels < 0 fails', () => {
+test('creating SRC with nChannels < 0 fails', () => {
 	let nChannels = -1;
 	let converterType = 1;
 	let inputSampleRate = 44100;
@@ -19,17 +19,28 @@ test('createing SRC with nChannels < 0 fails', () => {
 
 	expect(() => {
 		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow('invalid nChannels submitted')
+	}).toThrow('invalid nChannels submitted');
 });
 
-test('createing SRC with nChannels == undefined fails', () => {
+test('creating SRC with nChannels == undefined fails', () => {
 	let converterType = 1;
 	let inputSampleRate = 44100;
 	let outputSampleRate = 44100;
 
 	expect(() => {
 		create();
-	}).toThrow('nChannels is undefined')
+	}).toThrow('nChannels is undefined');
+});
+
+test('creating SRC with nChannels > 128 fails', () => {
+	let converterType = 1;
+	let inputSampleRate = 44100;
+	let outputSampleRate = 44100;
+	let nChannels = 129;
+
+	expect(() => {
+		create(nChannels, inputSampleRate, outputSampleRate);
+	}).toThrow('invalid nChannels submitted');
 });
 
 test('creating SRC with inputSampleRate < 0 fails', () => {
@@ -40,7 +51,7 @@ test('creating SRC with inputSampleRate < 0 fails', () => {
 
 	expect(() => {
 		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow('invalid inputSampleRate')
+	}).toThrow('invalid inputSampleRate');
 });
 
 test('creating SRC with outputSampleRate < 0 fails', () => {
@@ -51,7 +62,7 @@ test('creating SRC with outputSampleRate < 0 fails', () => {
 
 	expect(() => {
 		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow('invalid outputSampleRate')
+	}).toThrow('invalid outputSampleRate');
 });
 
 test('creating SRC with inputSampleRate > 192k fails', () => {
@@ -62,7 +73,7 @@ test('creating SRC with inputSampleRate > 192k fails', () => {
 
 	expect(() => {
 		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow('invalid inputSampleRate')
+	}).toThrow('invalid inputSampleRate');
 });
 
 test('creating SRC with outputSampleRate > 192k fails', () => {
@@ -73,7 +84,7 @@ test('creating SRC with outputSampleRate > 192k fails', () => {
 
 	expect(() => {
 		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow('invalid outputSampleRate')
+	}).toThrow('invalid outputSampleRate');
 });
 
 test('creating SRC with inputSampleRate == undefined fails', () => {
@@ -82,7 +93,7 @@ test('creating SRC with inputSampleRate == undefined fails', () => {
 
 	expect(() => {
 		create(nChannels);
-	}).toThrow('inputSampleRate is undefined')
+	}).toThrow('inputSampleRate is undefined');
 });
 
 test('creating SRC with outputSampleRate == undefined fails', () => {
@@ -92,7 +103,7 @@ test('creating SRC with outputSampleRate == undefined fails', () => {
 
 	expect(() => {
 		create(nChannels, inputSampleRate);
-	}).toThrow('outputSampleRate is undefined')
+	}).toThrow('outputSampleRate is undefined');
 });
 
 test('bad .wasm file causes promise rejection', (done) => {

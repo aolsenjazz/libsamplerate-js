@@ -1,3 +1,4 @@
+// mock for the real LoadSRC. ignore me
 export default function LoadSRC(overrides) {
 	return new Promise((resolve, reject) => {
 		if (overrides.locateFile() == '/libsamplerate.wasm') {

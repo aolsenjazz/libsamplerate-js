@@ -8,6 +8,7 @@ test_script:
   - node --version
   - npm --version
   - cmd: npm run build
+  - cmd: npm run test:coverage
 
 build: off
 

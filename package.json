@@ -26,7 +26,8 @@
     "watch-cpp": "nodemon --watch src/*.cpp --watch src/*.h --exec \"npm run compile-wasm\"",
     "watch-benchmarks": "nodemon --watch benchmarks/src --exec \"cd benchmarks; npx webpack --config webpack.config.js\"",
     "watch-worker": "nodemon --watch examples/worker/src --exec \"cd examples/worker; npx webpack --config webpack.config.js\"",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage && ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info"
   },
   "jest": {
     "coverageReporters": [

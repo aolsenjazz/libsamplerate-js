@@ -30,9 +30,6 @@
     "test:coverage": "jest --coverage && ./node_modules/coveralls/bin/coveralls.js < coverage/lcov.info"
   },
   "jest": {
-    "coverageReporters": [
-      "json"
-    ],
     "collectCoverageFrom": [
       "src/*.js"
     ],

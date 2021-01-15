@@ -20,19 +20,21 @@
 	<p id="msg"></p>
 
 	<script>
-		let sr = document.getElementById('sample-rate');
-		let input = document.getElementById('input');
-		let resample = document.getElementById('resample');
-		let msg = document.getElementById('msg');
-		let samples, nChannels, inputSampleRate, resampled;
-		let outputSampleRate = 'null';
+		// get dom objects
+		var sr       = document.getElementById('sample-rate');
+		var input    = document.getElementById('input');
+		var resample = document.getElementById('resample');
+		var msg      = document.getElementById('msg');
+		
+		var samples, nChannels, inputSampleRate, resampled;
+		var outputSampleRate = 'null';
 
 		// load a .wav file
-		let reader = new FileReader();
+		var reader = new FileReader();
 		reader.onload = function(e) {
 			// create a WaveFile object + get meta information
-			let safariFixed = e.target.result.split('base64,')[1];
-			let wav = new wavefile.WaveFile();
+			var safariFixed = e.target.result.split('base64,')[1];
+			var wav = new wavefile.WaveFile();
 			wav.fromBase64(safariFixed);
 
 			nChannels = wav.fmt.numChannels;
@@ -40,9 +42,9 @@
 
 			// get the raw samples, then convert to Float32 where -1 < sample < 1
 			samples = wav.getSamples(true, Int16Array);
-			let float32 = new Float32Array(samples);
+			var float32 = new Float32Array(samples);
 
-			for (let i = 0; i < samples.length; i++) {
+			for (var i = 0; i < samples.length; i++) {
 				float32[i] = samples[i] / 32767;
 			}
 
@@ -61,7 +63,7 @@
 				wasmPath: '/dist/libsamplerate.wasm'
 			})
 				.then((src) => {
-					let time = Date.now();
+					var time = Date.now();
 					resampled = src.simple(samples);
 
 					msg.innerHTML = 'Converted to ' + resampled.length + ' samples in ' + (Date.now() - time) + ' ms';
@@ -70,27 +72,27 @@
 
 		play.onclick = () => {
 			// init audio ctx
-			let AudioCtx = window.AudioContext || window.webkitAudioContext;
-			let context = new AudioCtx({sampleRate: parseInt(outputSampleRate)});
-			let buff = context.createBuffer(nChannels, resampled.length / nChannels, parseInt(outputSampleRate));
+			var AudioCtx = window.AudioContext || window.webkitAudioContext;
+			var context = new AudioCtx({sampleRate: parseInt(outputSampleRate)});
+			var buff = context.createBuffer(nChannels, resampled.length / nChannels, parseInt(outputSampleRate));
 
 			// get the channels
-			let chans = [];
-			for (let i = 0; i < nChannels; i++) {
+			var chans = [];
+			for (var i = 0; i < nChannels; i++) {
 				chans.push(buff.getChannelData(i));
 			}
 
 			// fill channels with the resampled audio
-			let chanPos = 0;
-			for (let i = 0; i < resampled.length; i += nChannels) {
-				for (let j = 0; j < nChannels; j++) {
+			var chanPos = 0;
+			for (var i = 0; i < resampled.length; i += nChannels) {
+				for (var j = 0; j < nChannels; j++) {
 					chans[j][chanPos] = resampled[i+j];
 				}
 				chanPos++;
 			}
 
 			// start audio
-			let buffSource = context.createBufferSource();
+			var buffSource = context.createBufferSource();
 			buffSource.buffer = buff;
 			buffSource.connect(context.destination);
 			buffSource.start();

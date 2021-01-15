@@ -16,11 +16,11 @@ function App() {
 	const [msg, setMsg] = useState(undefined);
 
 	// libsamplerate settings
-	const [outputSampleRateStr, setOutputSampleRateStr] = useState('44100');
-	const [wav, setWav] = useState(new WaveFile()); // holds nChannels and sampleRate
-	const [samples, setSamples] = useState(undefined);
+	const [wav, setWav]             = useState(new WaveFile()); // holds nChannels and sampleRate
+	const [samples, setSamples]     = useState(undefined);
 	const [algorithm, setAlgorithm] = useState('linear');
-	const [api, setApi] = useState('simple');
+	const [api, setApi]             = useState('simple');
+	const [outputSampleRateStr, setOutputSampleRateStr] = useState('44100');
 
 	// read the file
 	const [reader, setReader] = useState(new FileReader());

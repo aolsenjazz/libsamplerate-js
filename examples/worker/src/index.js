@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { useState, useEffect, useCallback } from 'react';
 import { WaveFile } from 'wavefile';
-import { writeInterleavedToChannels, toFloat32 } from './util';
+import { writeInterleavedToChannels, toFloat32 } from '../../../src/util';
 import { ConverterType } from '../../../dist/libsamplerate';
 
 import Worker from './worker.js';

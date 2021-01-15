@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { WaveFile } from 'wavefile';
 import { create, ConverterType } from '../../dist/libsamplerate';
 import { Resampler } from './control-resampler';
-import { writeInterleavedToChannels, toFloat32 } from './util';
+import { writeInterleavedToChannels, toFloat32 } from '../../src/util';
 
 function App() {
 	// benchmark meta information

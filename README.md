@@ -1,6 +1,6 @@
 # libsamplerate-js
 
-![AppVeyor](https://img.shields.io/appveyor/build/aolsenjazz/libsamplerate-js)
+![AppVeyor](https://img.shields.io/appveyor/build/aolsenjazz/libsamplerate-js)[![Coverage Status](https://coveralls.io/repos/github/aolsenjazz/libsamplerate-js/badge.svg?branch=main)](https://coveralls.io/github/aolsenjazz/libsamplerate-js?branch=main)
 
 libsamplerate-js is a port of [libsamplerate](http://www.mega-nerd.com/SRC/) to Web Assembly exposed through a simple JS API for use in-browser. The [simple](http://www.mega-nerd.com/SRC/api_simple.html) API is ideal for resampling large pieces of audio. The [full](http://www.mega-nerd.com/SRC/api_full.html) API is ideal for quickly resampling small portions (128+ samples) of a larger piece of audio such as audio received from a Websocket or WebRTC connection.
 

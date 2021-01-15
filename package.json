@@ -30,9 +30,7 @@
   },
   "jest": {
     "coverageReporters": [
-      "json-summary",
-      "text",
-      "lcov"
+      "json"
     ],
     "collectCoverageFrom": [
       "src/*.js"
@@ -60,6 +58,7 @@
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
     "copy-webpack-plugin": "^7.0.0",
+    "coveralls": "^3.1.0",
     "jest": "^26.6.3",
     "nodemon": "^2.0.7",
     "react": "^17.0.1",

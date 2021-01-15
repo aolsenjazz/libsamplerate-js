@@ -1,4 +1,4 @@
-import { toChunks, copyOrWriteArray } from '../src/util';
+import { toChunks, copyOrWriteArray, toFloat32 } from '../src/util';
 
 test('splitting a float32Array returns an Float32Array[]', () => {
 	let array = new Float32Array(44100);
@@ -67,3 +67,57 @@ test('copyOrWriteArray with limited length copies only specified length', () => 
 
 	expect(JSON.stringify(dataOut)).toBe(JSON.stringify(correct));
 });
+
+test('toFloat32 float32', () => {
+	let float32 = new Float32Array([1,2,3]);
+	let result = toFloat32(float32);
+	expect(JSON.stringify(result)).toBe(JSON.stringify(float32));
+});
+
+test('toFloat32 int8', () => {
+	let int8 = new Int8Array([-127, 0, 127]);
+	let correct = new Float32Array([-1, 0, 1]);
+	let result = toFloat32(int8);
+	expect(JSON.stringify(result)).toBe(JSON.stringify(correct));
+});
+
+test('toFloat32 int16', () => {
+	let int16 = new Int16Array([-32767, 0, 32767]);
+	let correct = new Float32Array([-1, 0, 1]);
+	let result = toFloat32(int16);
+	expect(JSON.stringify(result)).toBe(JSON.stringify(correct));
+});
+
+test('toFloat32 int32', () => {
+	let int32 = new Int32Array([-2147483647, 0, 2147483647]);
+	let correct = new Float32Array([-1, 0, 1]);
+	let result = toFloat32(int32);
+	expect(JSON.stringify(result)).toBe(JSON.stringify(correct));
+});
+
+test('toFloat32 Uint8', () => {
+	let int8 = new Uint8Array([0, 127, 127 * 2]);
+	let correct = new Float32Array([-1, 0, 1]);
+	let result = toFloat32(int8);
+	expect(JSON.stringify(result)).toBe(JSON.stringify(correct));
+});
+
+test('toFloat32 Uint16', () => {
+	let int16 = new Uint16Array([0, 32767, 32767 * 2]);
+	let correct = new Float32Array([-1, 0, 1]);
+	let result = toFloat32(int16);
+	expect(JSON.stringify(result)).toBe(JSON.stringify(correct));
+});
+
+test('toFloat32 Uint32', () => {
+	let int32 = new Uint32Array([0, 2147483647, 2147483647 * 2]);
+	let correct = new Float32Array([-1, 0, 1]);
+	let result = toFloat32(int32);
+	expect(JSON.stringify(result)).toBe(JSON.stringify(correct));
+});
+
+test('toFloat32 Array throws', () => {
+	expect(() => {
+		toFloat32([1,2,3]);
+	}).toThrow('Unsupport data type function Array() { [native code] }');
+})

@@ -38,14 +38,14 @@ let inputSampleRate  = 44100;
 let outputSampleRate = 48000;
 
 create(nChannels, inputSampleRate, ouputSampleRate, {
-	converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
-	wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
+    converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
+    wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
 })
-	.then((src) => {
-		let data = new Float32Array(44100);
-		let resampledData = src.simple(data);
-		src.destroy(); // clean up
-	});
+    .then((src) => {
+        let data = new Float32Array(44100);
+        let resampledData = src.simple(data);
+        src.destroy(); // clean up
+    });
 ```
 or
 ```javascript
@@ -57,34 +57,34 @@ let inputSampleRate  = 44100;
 let outputSampleRate = 48000;
 
 LibSampleRate.create(,nChannels, inputSampleRate, ouputSampleRate, {
-	converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
-	wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
+    converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
+    wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
 })
-	.then((src) => {
-		let data = new Float32Array(44100);
-		let resampledData = src.full(data);
-		src.destroy(); // clean up
-	});
+    .then((src) => {
+        let data = new Float32Array(44100);
+        let resampledData = src.full(data);
+        src.destroy(); // clean up
+    });
 ```
 
 ### In HTML:
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@alexanderolsen/libsamplerate-js"></script>
 <script>
-	var converterType    = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
-	var nChannels        = 2;
-	var inputSampleRate  = 44100;
-	var outputSampleRate = 48000;
+    var converterType    = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
+    var nChannels        = 2;
+    var inputSampleRate  = 44100;
+    var outputSampleRate = 48000;
 
-	LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
-		converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
-		wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
-	})
-		.then((src) => {
-				var data = new Float32Array(44100);
-				let resampledData = src.full(data);
-				src.destroy(); // clean up
-			});
+    LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
+        converterType: converterType,                  // default SRC_SINC_FASTEST. see API for more
+        wasmPath: '/path/from/root/libsamplerate.wasm' // default '/libsamplerate.wasm'
+    })
+        .then((src) => {
+                var data = new Float32Array(44100);
+                let resampledData = src.full(data);
+                src.destroy(); // clean up
+            });
 </script>
 ```
 Or use the libsamplerate.js file in the *dist* folder:
@@ -138,11 +138,11 @@ destroy() { ... }
 Converter types are as follows. More information can be found at the [libsamplerate website](http://www.mega-nerd.com/SRC/api_misc.html#Converters).
 ```javascript
 const ConverterType = {
-	SRC_SINC_BEST_QUALITY: 0,   // highest quality, slowest
-	SRC_SINC_MEDIUM_QUALITY: 1, // 
-	SRC_SINC_FASTEST: 2,        // in-between
-	SRC_ZERO_ORDER_HOLD: 3,     // poor quality, "blindingly" fast
-	SRC_LINEAR: 4               // poor quality, "blindingly" fast
+    SRC_SINC_BEST_QUALITY: 0,   // highest quality, slowest
+    SRC_SINC_MEDIUM_QUALITY: 1, // 
+    SRC_SINC_FASTEST: 2,        // in-between
+    SRC_ZERO_ORDER_HOLD: 3,     // poor quality, "blindingly" fast
+    SRC_LINEAR: 4               // poor quality, "blindingly" fast
 }
 ```
 

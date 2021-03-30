@@ -11,7 +11,11 @@ export function toChunks(array, maxChunkSize, Constructor) {
 	let chunks = [];
 	for (let i = 0; i < array.length; i += maxChunkSize) {
 		let bound = Math.min(maxChunkSize, array.length - lastPos);
-		let chunk = new Constructor(array.buffer, lastPos * array.BYTES_PER_ELEMENT, bound);
+		let chunk = new Constructor(
+			array.buffer,
+			lastPos * array.BYTES_PER_ELEMENT,
+			bound
+		);
 		lastPos += maxChunkSize;
 
 		chunks.push(chunk);
@@ -22,13 +26,13 @@ export function toChunks(array, maxChunkSize, Constructor) {
 
 /**
  * Writes dataIn to dataOut, or a new Float32Array
- * 
+ *
  * @param  {Number}               length  Amount of data to copy
  * @param  {Float32Array}         dataIn  Array to copy values from
  * @param  {Float32Array || null} dataOut If not null, copy data from dataIn into this array, then return it
  * @return {Float32Array}                 A new Float32Array or dataOut if dataOut != null
  */
-export function copyOrWriteArray(length, dataIn, dataOut=null) {
+export function copyOrWriteArray(length, dataIn, dataOut = null) {
 	let _dataOut = dataOut === null ? new Float32Array(length) : dataOut;
 
 	for (let i = 0; i < length; i++) {
@@ -39,7 +43,7 @@ export function copyOrWriteArray(length, dataIn, dataOut=null) {
 }
 
 /**
- * converts and *scales* TypedArray to Float32 where samples are scaled from 
+ * converts and *scales* TypedArray to Float32 where samples are scaled from
  * TypedArray.minValue < n < TypedArray.maxValue to -1 < n < 1
  *
  * @param  {TypedArray} data A TypedArray containing audio samples
@@ -49,7 +53,7 @@ export function toFloat32(data) {
 	let divisor = maxValueForTypedArray(data);
 	let float32 = new Float32Array(data.length);
 
-	switch(data.constructor) {
+	switch (data.constructor) {
 		case Float32Array:
 			return data;
 		case Int8Array:
@@ -60,7 +64,8 @@ export function toFloat32(data) {
 		case Uint8Array:
 		case Uint16Array:
 		case Uint32Array:
-			for (let i = 0; i < data.length; i++) float32[i] = (data[i] - divisor) / divisor;
+			for (let i = 0; i < data.length; i++)
+				float32[i] = (data[i] - divisor) / divisor;
 	}
 
 	return float32;

@@ -42,6 +42,18 @@
       "SRC": "<rootDir>/src/src.js"
     }
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module"
+    },
+    "rules": {}
+  },
   "homepage": "https://github.com/aolsenjazz/libsamplerate-js",
   "repository": "https://github.com/aolsenjazz/libsamplerate-js",
   "bugs": "https://github.com/aolsenjazz/libsamplerate-js/issues",

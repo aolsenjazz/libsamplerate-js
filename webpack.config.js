@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
 	module: {
@@ -7,22 +7,22 @@ module.exports = {
 				test: /\.m?js$/,
 				exclude: /node_modules/,
 				use: {
-					loader: 'babel-loader',
+					loader: "babel-loader",
 					options: {
-						presets: [
-							['@babel/preset-env', { targets: 'defaults' }]
-						]
-					}
-				}
+						presets: [["@babel/preset-env", { targets: "defaults" }]],
+					},
+				},
 			},
-		]
+		],
 	},
-	entry: path.join(__dirname, 'src', 'libsamplerate.js'),
-	mode: 'production',
+	entry: path.join(__dirname, "src", "libsamplerate.js"),
+	mode: "production",
+	target: "node",
 	output: {
-		filename: 'libsamplerate.js',
-		path: path.resolve(__dirname, 'dist'),
-		library: 'LibSampleRate',
-		libraryTarget: 'umd',
+		filename: "libsamplerate.js",
+		path: path.resolve(__dirname, "dist"),
+		library: "LibSampleRate",
+		libraryTarget: "umd",
+		globalObject: "this",
 	},
-}
+};

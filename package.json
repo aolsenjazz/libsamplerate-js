@@ -1,6 +1,6 @@
 {
   "name": "@alexanderolsen/libsamplerate-js",
-  "version": "1.1.6",
+  "version": "1.1.61",
   "description": "Resample audio in-browser using a web assembly port of libsamplerate.",
   "keywords": [
     "web assembly",
@@ -21,7 +21,7 @@
   },
   "scripts": {
     "build": "npx webpack",
-    "compile-wasm": "emcc --bind -o src/glue.js src/libsamplerate-wrapper.cpp lib/libsamplerate.a -s MODULARIZE -s EXPORT_NAME='LoadSRC' -s ENVIRONMENT='web' -s ALLOW_MEMORY_GROWTH='1' -O3; mv src/glue.wasm dist/libsamplerate.wasm",
+    "compile-wasm": "echo 'You might need to add emcc to path first. More info at https://github.com/emscripten-core/emscripten/issues/5696'; emcc --bind -o src/glue.js src/libsamplerate-wrapper.cpp lib/libsamplerate.a -s MODULARIZE -s EXPORT_NAME='LoadSRC' -s ENVIRONMENT='web' -s ALLOW_MEMORY_GROWTH='1' -O3; mv src/glue.wasm dist/libsamplerate.wasm",
     "watch-js": "nodemon --watch src --exec \"npx webpack --config webpack.config.js\"",
     "watch-cpp": "nodemon --watch src/*.cpp --watch src/*.h --exec \"npm run compile-wasm\"",
     "watch-benchmarks": "nodemon --watch benchmarks/src --exec \"cd benchmarks; npx webpack --config webpack.config.js\"",

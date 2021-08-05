@@ -24,8 +24,8 @@ export default class SRC {
 		this.module = module;
 		this.converterType = converterType;
 		this.nChannels = nChannels;
-		this.inputSampleRate = inputSampleRate;
-		this.outputSampleRate = outputSampleRate;
+		this._inputSampleRate = inputSampleRate;
+		this._outputSampleRate = outputSampleRate;
 		this.ratio = outputSampleRate / inputSampleRate;
 		this.isDestroyed = false;
 
@@ -65,8 +65,8 @@ export default class SRC {
 	}
 
 	/**
-	 * Cleans up WASM SRC resources. Once this is called on an instance, that instance should not
-	 * be used again or else risk hitting a segfault in WASM code.
+	 * Cleans up WASM SRC resources. Once this is called on an instance, that instance must be
+	 * reinitialized with src.init() before it can be used again.
 	 */
 	destroy() {
 		if (this.isDestroyed === true) {
@@ -75,6 +75,28 @@ export default class SRC {
 			this.module.destroy();
 			this.isDestroyed = true;
 		}
+	}
+
+	get inputSampleRate() {
+		return this._inputSampleRate;
+	}
+
+	get outputSampleRate() {
+		return this._outputSampleRate;
+	}
+
+	set inputSampleRate(inputSampleRate) {
+		this._inputSampleRate = inputSampleRate;
+
+		this.module.destroy();
+		this.module.init(this.nChannels, this.converterType, this.inputSampleRate, this.outputSampleRate);
+	}
+
+	set outputSampleRate(outputSampleRate) {
+		this._outputSampleRate = outputSampleRate;
+
+		this.module.destroy();
+		this.module.init(this.nChannels, this.converterType, this.inputSampleRate, this.outputSampleRate);
 	}
 
 	/**

@@ -3,18 +3,39 @@ import { ConverterType, create } from "../dist/libsamplerate";
 
 let converterType = ConverterType.SRC_SINC_BEST_QUALITY;
 let nChannels = 2;
-let inputSampleRate = 44100;
-let outputSampleRate = 48000;
+let inputSampleRate = 48000;
+let outputSampleRate = 96000;
 
-test("resamples data successfully in node", async () => {
+test("resamples data successfully in node", async (done) => {
     const src = await create(nChannels, inputSampleRate, outputSampleRate, {
         converterType: converterType, // default SRC_SINC_FASTEST. see API for more
         wasmPath: "dist/libsamplerate.wasm", // default '/libsamplerate.wasm'
     });
 
-    let data = new Float32Array(44100);
-    let resampledData = src.full(data);
+    let data = new Float32Array(48000);
+    let resampledData = src.simple(data);
     src.destroy(); // clean up
 
-    expect(resampledData.length).toBe(47688);
+    expect(resampledData.length).toBe(96000);
+
+    done();
+});
+
+test('return correct num samples with 96k then 192000k outputs', async (done) => {
+    const src = await create(nChannels, inputSampleRate, outputSampleRate, {
+        converterType: converterType, // default SRC_SINC_FASTEST. see API for more
+        wasmPath: "dist/libsamplerate.wasm", // default '/libsamplerate.wasm'
+    });
+
+    let data = new Float32Array(48000);
+    let resampledData = src.simple(data);
+    expect(resampledData.length).toBe(96000);
+
+    src.outputSampleRate = 192000;
+
+    let secondResampled = src.simple(data);
+
+    expect(secondResampled.length).toBe(192000);
+
+    done();
 });

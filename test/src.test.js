@@ -150,3 +150,27 @@ test('calling resample with dataOut.length < dataIn.length && ratio > 1 fails', 
 		src._resample(() => {}, dataIn, dataOut);
 	}).toThrow('dataOut must be at least ceil(srcRatio * dataIn.length) samples long');
 });
+
+test('setting outputSampleRate sets src._outputSampleRate', () => {
+	let nChannels = 2;
+	let converterType = 0;
+	let inputSampleRate = 44100;
+	let outputSampleRate = 48000;
+	let src = new SRC(module(), converterType, nChannels, inputSampleRate, outputSampleRate);
+
+	src.inputSampleRate = 96000;
+
+	expect(src.inputSampleRate).toBe(96000);
+});
+
+test('setting inputSampleRate sets src._inputSampleRate', () => {
+	let nChannels = 2;
+	let converterType = 0;
+	let inputSampleRate = 44100;
+	let outputSampleRate = 48000;
+	let src = new SRC(module(), converterType, nChannels, inputSampleRate, outputSampleRate);
+
+	src.outputSampleRate = 96000;
+
+	expect(src.outputSampleRate).toBe(96000);
+});

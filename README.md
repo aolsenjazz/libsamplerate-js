@@ -143,10 +143,26 @@ full(dataIn, dataOut=null) { ... }
 
 ```javascript
 /**
- * Cleans up WASM SRC resources. Once this is called on an instance, that instance should not
- * be used again or else risk hitting a segfault in WASM code.
+ * Cleans up WASM SRC resources. Once this is called on an instance, that instance must be
+ * reinitialized with src.init() before it can be used again.
  */
 destroy() { ... }
+```
+
+### Update `outputSampleRate` & `inputSampleRate`
+
+```javascript
+let nChannels = 2;
+let inputSampleRate = 44100;
+let outputSampleRate = 48000;
+
+create(nChannels, inputSampleRate, ouputSampleRate)
+  .then((src) => {
+    let data = new Float32Array(44100);
+    let resampled48k = src.simple(data); // returns ~48000 samples
+    src.outputSampleRate = 96000;
+    let resampled96k = src.simple(data); // returns ~96000 samples
+});
 ```
 
 ### `ConverterType`

@@ -7,7 +7,7 @@ let inputSampleRate = 48000;
 let outputSampleRate = 96000;
 
 test("resamples data successfully in node", () => {
-    create(nChannels, inputSampleRate, outputSampleRate, {
+    return create(nChannels, inputSampleRate, outputSampleRate, {
             converterType: converterType, // default SRC_SINC_FASTEST. see API for more
             wasmPath: "dist/libsamplerate.wasm", // default '/libsamplerate.wasm'
     }).then((src) => {
@@ -19,21 +19,19 @@ test("resamples data successfully in node", () => {
     })
 });
 
-test('return correct num samples with 96k then 192000k outputs', async (done) => {
-    const src = await create(nChannels, inputSampleRate, outputSampleRate, {
+test('return correct num samples with 96k then 192000k outputs', () => {
+    return create(nChannels, inputSampleRate, outputSampleRate, {
         converterType: converterType, // default SRC_SINC_FASTEST. see API for more
         wasmPath: "dist/libsamplerate.wasm", // default '/libsamplerate.wasm'
+    }).then((src) => {
+        let data = new Float32Array(48000);
+        let resampledData = src.simple(data);
+        expect(resampledData.length).toBe(96000);
+
+        src.outputSampleRate = 192000;
+
+        let secondResampled = src.simple(data);
+
+        expect(secondResampled.length).toBe(192000);
     });
-
-    let data = new Float32Array(48000);
-    let resampledData = src.simple(data);
-    expect(resampledData.length).toBe(96000);
-
-    src.outputSampleRate = 192000;
-
-    let secondResampled = src.simple(data);
-
-    expect(secondResampled.length).toBe(192000);
-
-    done();
 });

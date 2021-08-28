@@ -22,8 +22,8 @@ export default class SRC {
 		outputSampleRate
 	) {
 		this.module = module;
-		this.converterType = converterType;
-		this.nChannels = nChannels;
+		this._converterType = converterType;
+		this._nChannels = nChannels;
 		this._inputSampleRate = inputSampleRate;
 		this._outputSampleRate = outputSampleRate;
 		this.ratio = outputSampleRate / inputSampleRate;
@@ -85,6 +85,14 @@ export default class SRC {
 		return this._outputSampleRate;
 	}
 
+	get nChannels() {
+		return this._nChannels;
+	}
+
+	get converterType() {
+		return this._converterType;
+	}
+
 	set inputSampleRate(inputSampleRate) {
 		this._inputSampleRate = inputSampleRate;
 
@@ -94,6 +102,20 @@ export default class SRC {
 
 	set outputSampleRate(outputSampleRate) {
 		this._outputSampleRate = outputSampleRate;
+
+		this.module.destroy();
+		this.module.init(this.nChannels, this.converterType, this.inputSampleRate, this.outputSampleRate);
+	}
+
+	set nChannels(nChannels) {
+		this._nChannels = nChannels;
+
+		this.module.destroy();
+		this.module.init(this.nChannels, this.converterType, this.inputSampleRate, this.outputSampleRate);
+	}
+
+	set converterType(converterType) {
+		this._converterType = converterType;
 
 		this.module.destroy();
 		this.module.init(this.nChannels, this.converterType, this.inputSampleRate, this.outputSampleRate);

@@ -174,3 +174,27 @@ test('setting inputSampleRate sets src._inputSampleRate', () => {
 
 	expect(src.outputSampleRate).toBe(96000);
 });
+
+test('setting nChannels sets src._nChannels', () => {
+	let nChannels = 2;
+	let converterType = 0;
+	let inputSampleRate = 44100;
+	let outputSampleRate = 48000;
+	let src = new SRC(module(), converterType, nChannels, inputSampleRate, outputSampleRate);
+
+	src.nChannels = 1;
+
+	expect(src.nChannels).toBe(1);
+});
+
+test('setting converterType sets src._converterType', () => {
+	let nChannels = 2;
+	let converterType = 0;
+	let inputSampleRate = 44100;
+	let outputSampleRate = 48000;
+	let src = new SRC(module(), converterType, nChannels, inputSampleRate, outputSampleRate);
+
+	src.converterType = 1;
+
+	expect(src.converterType).toBe(1);
+});

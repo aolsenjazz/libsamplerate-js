@@ -46,7 +46,7 @@ let nChannels = 2;
 let inputSampleRate = 44100;
 let outputSampleRate = 48000;
 
-create(nChannels, inputSampleRate, ouputSampleRate, {
+create(nChannels, inputSampleRate, outputSampleRate, {
     converterType: converterType, // default SRC_SINC_FASTEST. see API for more
     wasmPath: "/path/from/root/libsamplerate.wasm", // default '/libsamplerate.wasm'
 }).then((src) => {
@@ -66,7 +66,7 @@ let nChannels = 2;
 let inputSampleRate = 44100;
 let outputSampleRate = 48000;
 
-LibSampleRate.create(nChannels, inputSampleRate, ouputSampleRate, {
+LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
     converterType: converterType, // default SRC_SINC_FASTEST. see API for more
     wasmPath: "/path/from/root/libsamplerate.wasm", // default '/libsamplerate.wasm'
 }).then((src) => {
@@ -156,8 +156,7 @@ let nChannels = 2;
 let inputSampleRate = 44100;
 let outputSampleRate = 48000;
 
-create(nChannels, inputSampleRate, ouputSampleRate)
-  .then((src) => {
+create(nChannels, inputSampleRate, outputSampleRate).then((src) => {
     let data = new Float32Array(44100);
     let resampled48k = src.simple(data); // returns ~48000 samples
     src.outputSampleRate = 96000;

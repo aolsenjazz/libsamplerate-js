@@ -1,6 +1,6 @@
 {
   "name": "@alexanderolsen/libsamplerate-js",
-  "version": "1.4.0",
+  "version": "1.4.2",
   "description": "Resample audio in node or browser using a webassembly port of libsamplerate.",
   "keywords": [
     "web assembly",
@@ -17,7 +17,9 @@
     "node"
   ],
   "main": "./dist/libsamplerate.js",
-  "files": "./dist",
+  "files": [
+    "dist/"
+  ],
   "scripts": {
     "build": "npx webpack",
     "compile-wasm": "emcc --bind -o src/glue.js src/libsamplerate-wrapper.cpp lib/libsamplerate.a -s MODULARIZE -s EXPORT_NAME='LoadSRC' -s ALLOW_MEMORY_GROWTH='1' -O3; mv src/glue.wasm dist/libsamplerate.wasm",

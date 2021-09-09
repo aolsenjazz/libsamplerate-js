@@ -1,3 +1,5 @@
+/** Usage: node index.js {sampleRate} {nameOfNewFile} */
+
 const LibSampleRate = require("../../dist/libsamplerate");
 const WaveFile = require("wavefile").WaveFile;
 const fs = require('fs');
@@ -8,7 +10,7 @@ if (process.argv.length !== 4) {
 
 let converterType = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
 const outputSampleRate = parseInt(process.argv[2])
-const inFile = 'test.wav';
+const inFile = 'sample.wav';
 const outFile = process.argv[3];
 
 const data = fs.readFileSync(inFile, {encoding: 'base64'});

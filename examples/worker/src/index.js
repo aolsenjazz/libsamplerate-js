@@ -3,10 +3,48 @@ import ReactDOM from 'react-dom';
 
 import { useState, useEffect, useCallback } from 'react';
 import { WaveFile } from 'wavefile';
-import { writeInterleavedToChannels, toFloat32 } from '../../../src/util';
 import { ConverterType } from '../../../dist/libsamplerate';
 
 import Worker from './worker.js';
+
+function maxValueForTypedArray(array) {
+  switch (array.constructor) {
+    case Float32Array:
+      return 1;
+    case Int8Array:
+    case Uint8Array:
+      return 127;
+    case Int16Array:
+    case Uint16Array:
+      return 32767;
+    case Int32Array:
+    case Uint32Array:
+      return 2147483647;
+    default:
+      throw "Unsupport data type " + array.constructor;
+  }
+}
+
+function toFloat32(data) {
+  var divisor = maxValueForTypedArray(data);
+  var float32 = new Float32Array(data.length);
+  switch (data.constructor) {
+    case Float32Array:
+      return data;
+    case Int8Array:
+    case Int16Array:
+    case Int32Array:
+      for (var i = 0; i < data.length; i++)
+        float32[i] = data[i] / divisor;
+      break;
+    case Uint8Array:
+    case Uint16Array:
+    case Uint32Array:
+      for (var j = 0; j < data.length; j++)
+        float32[j] = (data[j] - divisor) / divisor;
+  }
+  return float32;
+}
 
 function App() {
 	// worker
@@ -69,7 +107,7 @@ function App() {
 					// initialization complete. resample some data
 					setMsg('resampling...');
 					time = Date.now();
-					worker.postMessage({command: api, samples: samples}, [samples.buffer]);
+					worker.postMessage({command: api, samples: samples});
 					break;
 				case 'postResample':
 					// data has been resampled. do something with it

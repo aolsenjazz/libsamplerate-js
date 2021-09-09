@@ -1,6 +1,6 @@
 {
   "name": "@alexanderolsen/libsamplerate-js",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Resample audio in node or browser using a webassembly port of libsamplerate.",
   "keywords": [
     "web assembly",
@@ -17,13 +17,11 @@
     "node"
   ],
   "main": "./dist/libsamplerate.js",
-  "directories": {
-    "test": "test"
-  },
+  "files": "./dist",
   "scripts": {
     "build": "npx webpack",
     "compile-wasm": "emcc --bind -o src/glue.js src/libsamplerate-wrapper.cpp lib/libsamplerate.a -s MODULARIZE -s EXPORT_NAME='LoadSRC' -s ALLOW_MEMORY_GROWTH='1' -O3; mv src/glue.wasm dist/libsamplerate.wasm",
-    "watch-js": "nodemon --watch src --exec \"npx webpack --config webpack.config.js\"",
+    "watch-ts": "nodemon --watch src --exec \"npx webpack\"",
     "watch-cpp": "nodemon --watch src/*.cpp --watch src/*.h --exec \"npm run compile-wasm\"",
     "watch-benchmarks": "nodemon --watch benchmarks/src --exec \"cd benchmarks; npx webpack --config webpack.config.js\"",
     "watch-worker": "nodemon --watch examples/worker/src --exec \"cd examples/worker; npx webpack --config webpack.config.js\"",
@@ -40,7 +38,7 @@
     "moduleNameMapper": {
       "glue.js": "<rootDir>/src/__mocks__/glue.js",
       "src.js": "<rootDir>/src/__mocks__/src.js",
-      "SRC": "<rootDir>/src/src.js"
+      "SRC": "<rootDir>/src/src.ts"
     }
   },
   "eslintConfig": {
@@ -64,21 +62,27 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "babel-eslint": "^10.1.0",
+    "@babel/preset-typescript": "^7.12.1",
+    "@typescript-eslint/eslint-plugin": "^4.31.0",
+    "@typescript-eslint/parser": "^4.31.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
     "coveralls": "^3.1.0",
     "eslint": "^7.32.0",
-    "eslint-plugin-jest": "^24.4.0",
     "jest": "^27.0.6",
     "nodemon": "^2.0.7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.1",
+    "ts-loader": "^9.2.5",
+    "typescript": "^4.4.2",
     "wavefile": "^11.0.0",
     "webpack": "^5.12.1",
     "webpack-cli": "^4.3.1",
     "worker-loader": "^3.0.7"
+  },
+  "dependencies": {
+    "prettier": "^2.4.0"
   }
 }

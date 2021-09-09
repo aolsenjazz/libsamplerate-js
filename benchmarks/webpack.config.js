@@ -1,29 +1,31 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-	entry: path.join(__dirname, 'src', 'index.js'),
-	mode: 'development',  
+	entry: path.join(__dirname, "src", "index.js"),
+	mode: "development",
 	output: {
-		path: path.resolve('.'),
-		filename: 'main.js'
+		path: path.resolve("."),
+		filename: "main.js",
 	},
 	module: {
 		rules: [
 			{
 				test: /\.m?js$/,
 				exclude: /node_modules/,
-				include: [
-					path.resolve(__dirname, 'src')
-				],
+				include: [path.resolve(__dirname, "src")],
 				use: {
-					loader: 'babel-loader',
+					loader: "babel-loader",
 					options: {
-						presets: [
-							['@babel/preset-env', { targets: 'defaults' }]
-						]
-					}
-				}
+						presets: [["@babel/preset-env", { targets: "defaults" }]],
+					},
+				},
 			},
-		]
-	}
-}
+		],
+	},
+	resolve: {
+		fallback: {
+			fs: false,
+			path: false,
+		},
+	},
+};

@@ -1,14 +1,11 @@
 {
-  "overrides": [
-    {
-      "files": [
-        "**/*.spec.js",
-        "**/*.spec.jsx"
-      ],
-      "env": {
-        "jest": true
-      }
-    }
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
   ],
-  "parser": "babel-eslint"
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ]
 }

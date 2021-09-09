@@ -4,10 +4,14 @@
 
 using namespace emscripten;
 
-// ~ 4 MB. default emscripten module heap size is 16 MB. heap size can be increased using emcc TOTAL_MEMORY flag
+/**
+ * The length (in `float`s) of the input and output buffers used to transmit data between
+ * JS and WASM. Each buffer is currently set to ~4MB.
+ */
 const int BUFFER_LEN = 1008000;
 
 // buffers to communicate w/js
+// TODO: Why on earth are we using hard-coded values here
 float source[1008000];
 float target[1008000];
 

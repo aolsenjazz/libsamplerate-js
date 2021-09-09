@@ -1,4 +1,4 @@
-import { create, ConverterType } from '../../../dist/libsamplerate'
+import { create } from '../../../dist/libsamplerate'
 
 let _src;
 
@@ -38,11 +38,11 @@ function init(quality, nChannels, inputSampleRate, outputSampleRate) {
 /** call the libsamplerate `simple` api */
 function simple(samples) {
 	let resampled = _src.simple(samples);
-	postMessage({command: 'postResample', samples: resampled}, [resampled.buffer])
+	postMessage({command: 'postResample', samples: resampled})
 }
 
 /** call the libsamplerate `full` api */
 function full(samples) {
 	let resampled = _src.full(samples);
-	postMessage({command: 'postResample', samples: resampled}, [resampled.buffer])
+	postMessage({command: 'postResample', samples: resampled})
 }

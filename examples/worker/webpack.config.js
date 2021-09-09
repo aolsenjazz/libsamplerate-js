@@ -29,5 +29,11 @@ module.exports = {
 				use: { loader: "worker-loader" },
 			},
 		]
+	},
+	resolve: {
+		fallback: {
+			"fs": false,
+			"path": false
+		}
 	}
 }

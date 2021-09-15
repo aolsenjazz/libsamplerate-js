@@ -32,7 +32,9 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/*.js"
+      "src/src.ts",
+      "src/util.ts",
+      "src/libsamplerate.ts"
     ],
     "coveragePathIgnorePatterns": [
       "glue.js"

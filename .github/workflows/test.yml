@@ -26,6 +26,10 @@ jobs:
       - name: npm run test
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
         run: |
           npm run test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

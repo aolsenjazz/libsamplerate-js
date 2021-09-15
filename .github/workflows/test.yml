@@ -28,7 +28,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
         run: |
-          yarn package
-          yarn lint
-          yarn tsc
-          yarn test
+          npm run test

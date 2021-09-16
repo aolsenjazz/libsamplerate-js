@@ -1,4 +1,4 @@
-name: Build
+name: Test
 
 on: [push, pull_request]
 
@@ -23,6 +23,13 @@ jobs:
         run: |
           npm i
 
-      - name: build
+      - name: npm run test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          npm run build
+          npm run test
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

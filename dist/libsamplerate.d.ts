@@ -8,7 +8,6 @@ import { ConverterTypeValue, ConverterType } from "./converter-type";
  */
 declare type CreateOptions = {
     converterType: ConverterTypeValue;
-    wasmPath: string;
 };
 /**
  * Load the libsamplerate wasm module and wrap it in a SRC object.

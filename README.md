@@ -211,11 +211,14 @@ npm run build
 ```
 
 
-You can also build with docker:
+You can also build with docker (either from scratch or the wasm only):
 ```bash
 git clone https://github.com/aolsenjazz/libsamplerate-js
 cd libsamplerate-js
 git submodule update --init
+cd scripts/library/
+docker build -t gcc-emscripten .
+cd ../../
 npm run compile-library-docker
 npm run compile-wasm-docker
 npm run build

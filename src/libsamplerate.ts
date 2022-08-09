@@ -2,7 +2,6 @@
  * The entry point into this library. All of the actual resampling work is handled in src.ts
  */
 
-import LoadSRC from "./glue.js";
 import { SRC } from "./src";
 import { ConverterTypeValue, ConverterType } from "./converter-type";
 
@@ -41,7 +40,12 @@ export async function create(
 	validate(nChannels, inputSampleRate, outputSampleRate, cType);
 
 	try {
-		const LoadSRClib = await LoadSRC()
+		const LoadSRC = await import(
+      /* webpackMode: "lazy" */
+			/* webpackChunkName: "glue-module" */ 
+			'./glue.js'
+		)
+		const LoadSRClib = await LoadSRC.default()
 		const src = new SRC(
 			LoadSRClib,
 			cType,

@@ -41,8 +41,8 @@ export async function create(
 
 	try {
 		const LoadSRC = await import(
-      /* webpackMode: "lazy" */
-			/* webpackChunkName: "glue-module" */ 
+			/* webpackMode: "lazy" */
+			/* webpackChunkName: "glue-module" */
 			'./glue.js'
 		)
 		const LoadSRClib = await LoadSRC.default()

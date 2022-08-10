@@ -1,10 +1,8 @@
 /**
  * The entry point into this library. All of the actual resampling work is handled in src.ts
  */
-
 import { SRC } from "./src";
 import { ConverterTypeValue, ConverterType } from "./converter-type";
-import LoadSRC from "./glue";
 
 /**
  * Options that can be passed to create() when obtaining a copy of SRC.
@@ -41,12 +39,12 @@ export async function create(
 	validate(nChannels, inputSampleRate, outputSampleRate, cType);
 
 	try {
-		// const LoadSRC = await import(
-		// 	/* webpackChunkName: "glue-module" */
-		// 	'./glue'
-		// )
-		// const LoadSRClib = await LoadSRC.default()
-		const LoadSRClib = await LoadSRC()
+		const LoadSRC = await import(
+			/* webpackMode: "lazy" */
+			/* webpackChunkName: "glue-module" */
+			'./glue'
+		)
+		const LoadSRClib = await LoadSRC.default()
 		const src = new SRC(
 			LoadSRClib,
 			cType,
@@ -56,7 +54,7 @@ export async function create(
 		);
 		return src
 	} catch (e) {
-		throw (e)
+		throw e
 	}
 }
 

@@ -76,7 +76,6 @@
     "webpack-cli": "^4.3.1",
     "worker-loader": "^3.0.7"
   },
-  "dependencies": {},
   "browser": {
     "fs": false
   }

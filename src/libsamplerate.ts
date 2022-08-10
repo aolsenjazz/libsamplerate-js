@@ -4,6 +4,7 @@
 
 import { SRC } from "./src";
 import { ConverterTypeValue, ConverterType } from "./converter-type";
+import LoadSRC from "./glue";
 
 /**
  * Options that can be passed to create() when obtaining a copy of SRC.
@@ -40,11 +41,12 @@ export async function create(
 	validate(nChannels, inputSampleRate, outputSampleRate, cType);
 
 	try {
-		const LoadSRC = await import(
-			/* webpackChunkName: "glue-module" */
-			'./glue'
-		)
-		const LoadSRClib = await LoadSRC.default()
+		// const LoadSRC = await import(
+		// 	/* webpackChunkName: "glue-module" */
+		// 	'./glue'
+		// )
+		// const LoadSRClib = await LoadSRC.default()
+		const LoadSRClib = await LoadSRC()
 		const src = new SRC(
 			LoadSRClib,
 			cType,

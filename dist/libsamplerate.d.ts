@@ -14,7 +14,6 @@ declare type CreateOptions = {
  *
  * options = {
  *   converterType: {ConverterType} default SRC_SINC_FASTEST
- *   wasmPath:      {String}        default '/libsamplerate.wasm'. set this to the location of your wasm file
  * }
  *
  * @param nChannels the number of output channels. 1-128 supported

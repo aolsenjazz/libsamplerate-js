@@ -16,7 +16,6 @@ type CreateOptions = {
  *
  * options = {
  *   converterType: {ConverterType} default SRC_SINC_FASTEST
- *   wasmPath:      {String}        default '/libsamplerate.wasm'. set this to the location of your wasm file
  * }
  *
  * @param nChannels the number of output channels. 1-128 supported
@@ -38,24 +37,20 @@ export async function create(
 
 	validate(nChannels, inputSampleRate, outputSampleRate, cType);
 
-	try {
-		const LoadSRC = await import(
-			/* webpackMode: "lazy" */
-			/* webpackChunkName: "glue-module" */
-			'./glue'
-		)
-		const LoadSRClib = await LoadSRC.default()
-		const src = new SRC(
-			LoadSRClib,
-			cType,
-			nChannels,
-			inputSampleRate,
-			outputSampleRate
-		);
-		return src
-	} catch (e) {
-		throw e
-	}
+	const LoadSRC = await import(
+		/* webpackMode: "lazy" */
+		/* webpackChunkName: "glue-module" */
+		'./glue.js'
+	)
+	const LoadSRClib = await LoadSRC.default()
+	const src = new SRC(
+		LoadSRClib,
+		cType,
+		nChannels,
+		inputSampleRate,
+		outputSampleRate
+	);
+	return src
 }
 
 export { ConverterType };

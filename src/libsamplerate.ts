@@ -3,6 +3,7 @@
  */
 import { SRC } from "./src";
 import { ConverterTypeValue, ConverterType } from "./converter-type";
+import LoadSRC from './glue';
 
 /**
  * Options that can be passed to create() when obtaining a copy of SRC.
@@ -37,14 +38,9 @@ export async function create(
 
 	validate(nChannels, inputSampleRate, outputSampleRate, cType);
 
-	const LoadSRC = await import(
-		/* webpackMode: "lazy" */
-		/* webpackChunkName: "glue-module" */
-		'./glue.js'
-	)
-	const LoadSRClib = await LoadSRC.default()
+	const loadedModule = await LoadSRC();
 	const src = new SRC(
-		LoadSRClib,
+		loadedModule,
 		cType,
 		nChannels,
 		inputSampleRate,

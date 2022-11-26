@@ -7,7 +7,7 @@
  *
  * More here: http://www.mega-nerd.com/SRC/api_misc.html#Converters
  */
-export declare type ConverterTypeValue = 0 | 1 | 2 | 3 | 4;
+export type ConverterTypeValue = 0 | 1 | 2 | 3 | 4;
 /** Used by libsamplerate to determine what algorithm to use to resample */
 export declare const ConverterType: {
     SRC_SINC_BEST_QUALITY: ConverterTypeValue;

@@ -1,6 +1,6 @@
 import { ConverterTypeValue } from "./converter-type";
 /** The object returned from loading WASM */
-export declare type ModuleType = {
+export type ModuleType = {
     /**
      * Initialize the src_data object in C
      * @param nChannels The number of channels

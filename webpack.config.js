@@ -9,7 +9,6 @@ module.exports = {
 	},
 	entry: path.join(__dirname, "src", "libsamplerate.ts"),
 	mode: "production",
-	target: "node",
 	output: {
 		filename: "libsamplerate.js",
 		chunkFilename : "[name].js",

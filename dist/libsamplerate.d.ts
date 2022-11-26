@@ -6,7 +6,7 @@ import { ConverterTypeValue, ConverterType } from "./converter-type";
 /**
  * Options that can be passed to create() when obtaining a copy of SRC.
  */
-declare type CreateOptions = {
+type CreateOptions = {
     converterType: ConverterTypeValue;
 };
 /**

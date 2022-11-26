@@ -59,7 +59,7 @@
     "@babel/preset-typescript": "^7.12.1",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^9.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-polyfill": "^6.26.0",
     "coveralls": "^3.1.0",

@@ -1,18 +1,14 @@
 /**
  * The entry point into this library. All of the actual resampling work is handled in src.ts
  */
-
-import LoadSRC from "./glue.js";
 import { SRC } from "./src";
 import { ConverterTypeValue, ConverterType } from "./converter-type";
-import { ModuleType } from "./module-type";
 
 /**
  * Options that can be passed to create() when obtaining a copy of SRC.
  */
 type CreateOptions = {
 	converterType: ConverterTypeValue;
-	wasmPath: string;
 };
 
 /**
@@ -20,7 +16,6 @@ type CreateOptions = {
  *
  * options = {
  *   converterType: {ConverterType} default SRC_SINC_FASTEST
- *   wasmPath:      {String}        default '/libsamplerate.wasm'. set this to the location of your wasm file
  * }
  *
  * @param nChannels the number of output channels. 1-128 supported
@@ -29,7 +24,7 @@ type CreateOptions = {
  * @param options Additional configuration information. see above
  * @returns a promise containing the SRC object on resolve, or error message on error
  */
-export function create(
+export async function create(
 	nChannels: number,
 	inputSampleRate: number,
 	outputSampleRate: number,
@@ -39,32 +34,23 @@ export function create(
 		options?.converterType === undefined
 			? ConverterType.SRC_SINC_FASTEST
 			: options?.converterType;
-	const wasm = options?.wasmPath || "/libsamplerate.wasm";
 
 	validate(nChannels, inputSampleRate, outputSampleRate, cType);
 
-	const overrides = {
-		locateFile: () => {
-			return wasm;
-		},
-	};
-
-	return new Promise((resolve, reject) => {
-		LoadSRC(overrides)
-			.then((module: ModuleType) => {
-				const src = new SRC(
-					module,
-					cType,
-					nChannels,
-					inputSampleRate,
-					outputSampleRate
-				);
-				resolve(src);
-			})
-			.catch((err: Error) => {
-				reject(err);
-			});
-	});
+	const LoadSRC = await import(
+		/* webpackMode: "lazy" */
+		/* webpackChunkName: "glue-module" */
+		'./glue.js'
+	)
+	const LoadSRClib = await LoadSRC.default()
+	const src = new SRC(
+		LoadSRClib,
+		cType,
+		nChannels,
+		inputSampleRate,
+		outputSampleRate
+	);
+	return src
 }
 
 export { ConverterType };

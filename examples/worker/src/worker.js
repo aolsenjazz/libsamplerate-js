@@ -24,7 +24,6 @@ onmessage = (e) => {
 function init(quality, nChannels, inputSampleRate, outputSampleRate) {
 	create(nChannels, inputSampleRate, outputSampleRate, {
 		converterType: quality,
-		wasmPath: '/dist/libsamplerate.wasm'
 	})
 		.then((src) => {
 			_src = src;

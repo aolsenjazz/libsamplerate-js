@@ -1,121 +1,124 @@
 import { create } from "../src/libsamplerate";
 
-test("creating SRC with converterType < 0 fails", () => {
+test("creating SRC with converterType < 0 fails", async () => {
 	let nChannels = 2;
 	let inputSampleRate = 44100;
 	let outputSampleRate = 44100;
 
-	expect(() => {
-		create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 });
-	}).toThrow("invalid converterType");
+	try {
+		await create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 })
+	} catch (e) {
+		expect(e).toEqual("invalid converterType")
+	}
 });
 
-test("creating SRC with nChannels < 0 fails", () => {
+test("creating SRC with nChannels < 0 fails", async () => {
 	let nChannels = -1;
 	let inputSampleRate = 44100;
 	let outputSampleRate = 44100;
 
-	expect(() => {
-		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow("invalid nChannels submitted");
+	try {
+		await create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 })
+	} catch (e) {
+		expect(e).toEqual("invalid nChannels submitted")
+	}
 });
 
-test("creating SRC with nChannels == undefined fails", () => {
-	expect(() => {
-		create();
-	}).toThrow("nChannels is undefined");
+test("creating SRC with nChannels == undefined fails", async () => {
+	try {
+		await create()
+	} catch (e) {
+		expect(e).toEqual("nChannels is undefined")
+	}
 });
 
-test("creating SRC with nChannels > 128 fails", () => {
+test("creating SRC with nChannels > 128 fails", async () => {
 	let inputSampleRate = 44100;
 	let outputSampleRate = 44100;
 	let nChannels = 129;
 
-	expect(() => {
-		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow("invalid nChannels submitted");
+	try {
+		await create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 })
+	} catch (e) {
+		expect(e).toEqual("invalid nChannels submitted")
+	}
 });
 
-test("creating SRC with inputSampleRate < 0 fails", () => {
+test("creating SRC with inputSampleRate < 0 fails", async () => {
 	let nChannels = 2;
 	let inputSampleRate = -1;
 	let outputSampleRate = 44100;
 
-	expect(() => {
-		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow("invalid inputSampleRate");
+	try {
+		await create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 })
+	} catch (e) {
+		expect(e).toEqual("invalid inputSampleRate")
+	}
 });
 
-test("creating SRC with outputSampleRate < 0 fails", () => {
+test("creating SRC with outputSampleRate < 0 fails", async () => {
 	let nChannels = 2;
 	let inputSampleRate = 44100;
 	let outputSampleRate = -1;
 
-	expect(() => {
-		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow("invalid outputSampleRate");
+	try {
+		await create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 })
+	} catch (e) {
+		expect(e).toEqual("invalid outputSampleRate")
+	}
 });
 
-test("creating SRC with inputSampleRate > 192k fails", () => {
+test("creating SRC with inputSampleRate > 192k fails", async () => {
 	let nChannels = 2;
 	let inputSampleRate = 193000;
 	let outputSampleRate = 44100;
 
-	expect(() => {
-		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow("invalid inputSampleRate");
+	try {
+		await create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 })
+	} catch (e) {
+		expect(e).toEqual("invalid inputSampleRate")
+	}
 });
 
-test("creating SRC with outputSampleRate > 192k fails", () => {
+test("creating SRC with outputSampleRate > 192k fails", async () => {
 	let nChannels = 2;
 	let inputSampleRate = 44100;
 	let outputSampleRate = 193000;
 
-	expect(() => {
-		create(nChannels, inputSampleRate, outputSampleRate);
-	}).toThrow("invalid outputSampleRate");
+	try {
+		await create(nChannels, inputSampleRate, outputSampleRate, { converterType: -1 })
+	} catch (e) {
+		expect(e).toEqual("invalid outputSampleRate")
+	}
 });
 
-test("creating SRC with inputSampleRate == undefined fails", () => {
+test("creating SRC with inputSampleRate == undefined fails", async () => {
 	let nChannels = 2;
 
-	expect(() => {
-		create(nChannels);
-	}).toThrow("inputSampleRate is undefined");
+	try {
+		await create(nChannels)
+	} catch (e) {
+		expect(e).toEqual("inputSampleRate is undefined")
+	}
 });
 
-test("creating SRC with outputSampleRate == undefined fails", () => {
-	let nChannels = 2;
-	let inputSampleRate = 44100;
-
-	expect(() => {
-		create(nChannels, inputSampleRate);
-	}).toThrow("outputSampleRate is undefined");
-});
-
-test("bad .wasm file causes promise rejection", (done) => {
+test("creating SRC with outputSampleRate == undefined fails", async () => {
 	let nChannels = 2;
 	let inputSampleRate = 44100;
-	let outputSampleRate = 44100;
 
-	create(nChannels, inputSampleRate, outputSampleRate, { wasmPath: "badpath" })
-		.then(() => {
-			// shouldn't happen
-		})
-		.catch((err) => {
-			expect(err).toBe("couldnt find wasm file");
-			done();
-		});
+	try {
+		await create(nChannels, inputSampleRate);
+	} catch (e) {
+		expect(e).toEqual("outputSampleRate is undefined")
+	}
 });
 
-test("good .wasm file causes promise resolve()", (done) => {
+test("good loading causes promise resolve()", (done) => {
 	let nChannels = 2;
 	let inputSampleRate = 44100;
 	let outputSampleRate = 44100;
 
-	create(nChannels, inputSampleRate, outputSampleRate, {
-		wasmPath: "/libsamplerate.wasm",
-	})
+	create(nChannels, inputSampleRate, outputSampleRate)
 		.then(() => {
 			done();
 		})

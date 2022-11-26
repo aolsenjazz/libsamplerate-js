@@ -9,7 +9,6 @@ let outputSampleRate = 96000;
 test("resamples data successfully in node", () => {
     return create(nChannels, inputSampleRate, outputSampleRate, {
             converterType: converterType, // default SRC_SINC_FASTEST. see API for more
-            wasmPath: "dist/libsamplerate.wasm", // default '/libsamplerate.wasm'
     }).then((src) => {
         let data = new Float32Array(48000);
         let resampledData = src.simple(data);
@@ -21,8 +20,7 @@ test("resamples data successfully in node", () => {
 
 test('return correct num samples with 96k then 192000k outputs', () => {
     return create(nChannels, inputSampleRate, outputSampleRate, {
-        converterType: converterType, // default SRC_SINC_FASTEST. see API for more
-        wasmPath: "dist/libsamplerate.wasm", // default '/libsamplerate.wasm'
+        converterType: converterType
     }).then((src) => {
         let data = new Float32Array(48000);
         let resampledData = src.simple(data);

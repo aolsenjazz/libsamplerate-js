@@ -20,16 +20,6 @@ Install using NPM:
 npm i @alexanderolsen/libsamplerate-js
 ```
 
-### Important Note On libsamplerate.wasm
-
-The web assembly file located at _/node_modules/@alexanderolsen/libsamplerate-js/dist/libsamplerate.wasm_ needs to be placed where libsamplerate-js can find it. The default location is at the root of your public directory. This location can be changed using the `wasmPath` variable in the options dict passed into `create()`:
-
-```javascript
-create(nChannels, inputSampleRate, outputSampleRate, {
-    wasmPath: "/some/path/to/libsamplerate.wasm",
-});
-```
-
 See **Usage** or **API** for more examples and instructions.
 
 ## Usage
@@ -48,7 +38,6 @@ let outputSampleRate = 48000;
 
 create(nChannels, inputSampleRate, outputSampleRate, {
     converterType: converterType, // default SRC_SINC_FASTEST. see API for more
-    wasmPath: "/path/from/root/libsamplerate.wasm", // default '/libsamplerate.wasm'
 }).then((src) => {
     let data = new Float32Array(44100);
     let resampledData = src.simple(data);
@@ -68,7 +57,6 @@ let outputSampleRate = 48000;
 
 LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
     converterType: converterType, // default SRC_SINC_FASTEST. see API for more
-    wasmPath: "/path/from/root/libsamplerate.wasm", // default '/libsamplerate.wasm'
 }).then((src) => {
     let data = new Float32Array(44100);
     let resampledData = src.full(data);
@@ -88,7 +76,6 @@ LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
 
     LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
         converterType: converterType, // default SRC_SINC_FASTEST. see API for more
-        wasmPath: "/path/from/root/libsamplerate.wasm", // default '/libsamplerate.wasm'
     }).then((src) => {
         var data = new Float32Array(44100);
         let resampledData = src.full(data);
@@ -220,6 +207,20 @@ git clone https://github.com/aolsenjazz/libsamplerate-js
 cd libsamplerate-js
 npm i
 npm run compile-wasm
+npm run build
+```
+
+
+You can also build with docker (either from scratch or the wasm only):
+```bash
+git clone https://github.com/aolsenjazz/libsamplerate-js
+cd libsamplerate-js
+git submodule update --init
+cd scripts/library/
+docker build -t gcc-emscripten .
+cd ../../
+npm run compile-library-docker
+npm run compile-wasm-docker
 npm run build
 ```
 

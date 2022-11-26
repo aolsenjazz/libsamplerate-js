@@ -25,6 +25,10 @@ module.exports = {
 				}
 			},
 			{
+				test: /\.(d.ts)$/,
+    	  loader: 'ignore-loader',
+			},
+			{
 				test: /worker\.js$/,
 				use: { loader: "worker-loader" },
 			},

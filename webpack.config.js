@@ -12,6 +12,7 @@ module.exports = {
 	target: "node",
 	output: {
 		filename: "libsamplerate.js",
+		chunkFilename : "[name].js",
 		path: path.resolve(__dirname, "dist"),
 		library: "LibSampleRate",
 		libraryTarget: "umd",

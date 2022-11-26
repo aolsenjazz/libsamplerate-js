@@ -10,6 +10,10 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.(d.ts)$/,
+    	  loader: 'ignore-loader',
+			},
+			{
 				test: /\.m?js$/,
 				exclude: /node_modules/,
 				include: [path.resolve(__dirname, "src")],

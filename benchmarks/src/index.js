@@ -138,7 +138,6 @@ function App() {
 			// init sample rate converter
 			create(_nChannels, _inputSampleRate, _outputSampleRate, {
 				converterType: quality,
-				wasmPath: "/dist/libsamplerate.wasm",
 			})
 				.then((src) => {
 					let testTimes = [];

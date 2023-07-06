@@ -1,2 +1,2 @@
 export default LoadSRC;
-declare function LoadSRC(LoadSRC: any): any;
+declare function LoadSRC(moduleArg?: {}): any;

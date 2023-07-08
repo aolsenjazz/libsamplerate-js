@@ -7,6 +7,7 @@ src/libsamplerate-wrapper.cpp lib/libsamplerate.a \
 -s SINGLE_FILE=1 \
 -s ENVIRONMENT=web,worker \
 -s WASM=1 \
+-s DYNAMIC_EXECUTION=0 \
 -s ASSERTIONS=0 \
 -s EXPORT_NAME='LoadSRC' \
 -s ALLOW_MEMORY_GROWTH='1' -O3

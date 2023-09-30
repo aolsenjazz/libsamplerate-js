@@ -5,7 +5,7 @@ const WaveFile = require("wavefile").WaveFile;
 const fs = require('fs');
 
 if (process.argv.length !== 4) {
-    throw new Error('Usage: node index.js path-to-source.wav resampled-file-name.wav');
+    throw new Error('Usage: node index.js outputSampleRate resampled-file-name.wav');
 }
 
 let converterType = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
@@ -22,7 +22,6 @@ const sampleRate = wav.fmt.sampleRate;
 
 LibSampleRate.create(nChannels, sampleRate, outputSampleRate, {
     converterType: converterType, // default SRC_SINC_FASTEST. see API for more
-    wasmPath: "../../dist/libsamplerate.wasm", // default '/libsamplerate.wasm'
 }).then((src) => {
     // get the raw samples, then convert to Float32 where -1 < sample < 1
     let samples = wav.getSamples(true, Int16Array);

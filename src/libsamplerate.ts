@@ -1,9 +1,10 @@
 /**
  * The entry point into this library. All of the actual resampling work is handled in src.ts
  */
-import { SRC } from "./src";
-import { ConverterTypeValue, ConverterType } from "./converter-type";
+import { SRC } from './src';
+import { ConverterTypeValue, ConverterType } from './converter-type';
 import LoadSRC from './glue';
+import { ModuleType } from './module-type';
 
 /**
  * Options that can be passed to create() when obtaining a copy of SRC.
@@ -38,15 +39,15 @@ export async function create(
 
 	validate(nChannels, inputSampleRate, outputSampleRate, cType);
 
-	const loadedModule = await LoadSRC();
+	const loadedModule = LoadSRC();
 	const src = new SRC(
-		loadedModule,
+		loadedModule as ModuleType,
 		cType,
 		nChannels,
 		inputSampleRate,
 		outputSampleRate
 	);
-	return src
+	return src;
 }
 
 export { ConverterType };
@@ -65,18 +66,26 @@ function validate(
 	outputSampleRate: number,
 	cType: ConverterTypeValue
 ) {
-	if (nChannels === undefined) throw "nChannels is undefined";
-	if (inputSampleRate === undefined) throw "inputSampleRate is undefined";
-	if (outputSampleRate === undefined) throw "outputSampleRate is undefined";
+	if (nChannels === undefined) throw 'nChannels is undefined';
+	if (inputSampleRate === undefined) throw 'inputSampleRate is undefined';
+	if (outputSampleRate === undefined) throw 'outputSampleRate is undefined';
 
-	if (nChannels < 1 || nChannels > 128) throw "invalid nChannels submitted";
+	if (nChannels < 1 || nChannels > 128) throw 'invalid nChannels submitted';
 	if (inputSampleRate < 1 || inputSampleRate > 192000)
-		throw "invalid inputSampleRate";
+		throw 'invalid inputSampleRate';
 	if (outputSampleRate < 1 || outputSampleRate > 192000)
-		throw "invalid outputSampleRate";
+		throw 'invalid outputSampleRate';
 	if (
 		cType < ConverterType.SRC_SINC_BEST_QUALITY ||
 		cType > ConverterType.SRC_LINEAR
 	)
-		throw "invalid converterType";
+		throw 'invalid converterType';
+}
+
+if (globalThis.constructor.name === 'AudioWorkletGlobalScope') {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(globalThis as any).LibSampleRate = {
+		create,
+		ConverterType,
+	};
 }

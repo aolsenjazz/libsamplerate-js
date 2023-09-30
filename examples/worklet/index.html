@@ -1,43 +1,33 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Web Audio Library Example</title>
-</head>
-<input type="file" accept="audio" id="input"/>
-	<select name="Output Sample Rate" id="sample-rate">
-		<option value="null">Select Output Sample Rate</option>
-		<option value="44100">44100</option>
-		<option value="48000">48000</option>
-		<option value="88200">88200</option>
-		<option value="96000">96000</option>
-	</select>
-	<button id="resample">Resample</button>
-	<button id="play">Play Resampled Audio</button>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Web Audio Library Example</title>
+	</head>
+	<button id="play">Play Sine Wave</button>
 	<p id="msg"></p>
-<body>
-	<script>
-		async function initAudio() {
-			const audioContext = new AudioContext();
-			await audioContext.audioWorklet.addModule('processor.js');
-	    await audioContext.audioWorklet.addModule('../../dist/libsamplerate.js');
+	<body>
+		<script>
+			async function initAudio() {
+				const audioContext = new AudioContext({sampleRate: 44100});
+				await audioContext.audioWorklet.addModule('processor.js');
+				await audioContext.audioWorklet.addModule(
+					'../../dist/libsamplerate.worklet.js' // or '@alexanderolsen/libsamplerate.worklet'
+				);
 
+				const oscillator = new OscillatorNode(audioContext);
+				const myProcessor = new AudioWorkletNode(audioContext, 'my-processor');
+				oscillator.connect(myProcessor).connect(audioContext.destination);
+				oscillator.start();
+			}
 
-			const oscillator = new OscillatorNode(audioContext);
-			const myProcessor = new AudioWorkletNode(audioContext, 'my-processor');
-			oscillator.connect(myProcessor).connect(audioContext.destination);
-			oscillator.start();
-		}
+			window.onload = initAudio;
 
-		window.onload = initAudio;
-
-		const play = document.getElementById('play');
-		play.onclick = () => {
-			initAudio();
-		}
-	</script>
-</body>
-
+			const play = document.getElementById('play');
+			play.onclick = () => {
+				initAudio();
+			};
+		</script>
+	</body>
 </html>

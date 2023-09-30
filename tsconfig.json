@@ -19,6 +19,5 @@
     "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "src/__mocks__"],
-  "files": ["src/types/global.d.ts"]
+  "exclude": ["node_modules", "src/__mocks__"]
 }

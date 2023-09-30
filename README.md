@@ -6,11 +6,11 @@ libsamplerate-js is a port of [libsamplerate](http://www.mega-nerd.com/SRC/) to 
 
 #### Features:
 
--   works both in-browser and in node!
--   1-128 channels
--   1-192000 sample rates
--   libsamplerate [Full](http://www.mega-nerd.com/SRC/api_full.html) and [Simple](http://www.mega-nerd.com/SRC/api_simple.html) APIs
--   See the [libsamplerate docs]() for much more (and better) info
+- works both in-browser and in node!
+- 1-128 channels
+- 1-192000 sample rates
+- libsamplerate [Full](http://www.mega-nerd.com/SRC/api_full.html) and [Simple](http://www.mega-nerd.com/SRC/api_simple.html) APIs
+- See the [libsamplerate docs]() for much more (and better) info
 
 ## Installation
 
@@ -29,7 +29,7 @@ libsamplerate-js expects to receive Float32Array mono or multi-channel interleav
 ### In modules:
 
 ```javascript
-import { create, ConverterType } from "@alexanderolsen/libsamplerate-js";
+import { create, ConverterType } from '@alexanderolsen/libsamplerate-js';
 
 let converterType = ConverterType.SRC_SINC_BEST_QUALITY;
 let nChannels = 2;
@@ -37,18 +37,18 @@ let inputSampleRate = 44100;
 let outputSampleRate = 48000;
 
 create(nChannels, inputSampleRate, outputSampleRate, {
-    converterType: converterType, // default SRC_SINC_FASTEST. see API for more
+  converterType: converterType, // default SRC_SINC_FASTEST. see API for more
 }).then((src) => {
-    let data = new Float32Array(44100);
-    let resampledData = src.simple(data);
-    src.destroy(); // clean up
+  let data = new Float32Array(44100);
+  let resampledData = src.simple(data);
+  src.destroy(); // clean up
 });
 ```
 
 or
 
 ```javascript
-const LibSampleRate = require("@alexanderolsen/libsamplerate-js");
+const LibSampleRate = require('@alexanderolsen/libsamplerate-js');
 
 let converterType = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
 let nChannels = 2;
@@ -56,31 +56,59 @@ let inputSampleRate = 44100;
 let outputSampleRate = 48000;
 
 LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
-    converterType: converterType, // default SRC_SINC_FASTEST. see API for more
+  converterType: converterType, // default SRC_SINC_FASTEST. see API for more
 }).then((src) => {
-    let data = new Float32Array(44100);
-    let resampledData = src.full(data);
-    src.destroy(); // clean up
+  let data = new Float32Array(44100);
+  let resampledData = src.full(data);
+  src.destroy(); // clean up
 });
 ```
+
+### In `AudioWorklets`:
+
+```javascript
+// project.js
+const audioContext = new AudioContext({ sampleRate: 44100 });
+await audioContext.audioWorklet.addModule('processor.js');
+await audioContext.audioWorklet.addModule(
+  '@alexanderolsen/libsamplerate.worklet'
+);
+```
+
+```javascript
+// processor.js
+const { create, ConverterType } = globalThis.LibSampleRate;
+
+let nChannels = 1;
+let inputSampleRate = 44100;
+let outputSampleRate = 16000; // or another target sample rate
+
+create(nChannels, inputSampleRate, outputSampleRate, {
+  converterType: ConverterType.SRC_SINC_BEST_QUALITY, // or some other quality
+}).then((src) => {
+  this.src = src;
+});
+```
+
+See examples/worklet for a full implementation example. Configuring libsamplerate-js to work in `AudioWorklets` is less trival than it ought to be due to `AudioWorklet` limitations. _Note that typing support is not avaialble for LibSampleRate within the context of AudioWorklets._
 
 ### In HTML:
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@alexanderolsen/libsamplerate-js"></script>
 <script>
-    var converterType = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
-    var nChannels = 2;
-    var inputSampleRate = 44100;
-    var outputSampleRate = 48000;
+  var converterType = LibSampleRate.ConverterType.SRC_SINC_BEST_QUALITY;
+  var nChannels = 2;
+  var inputSampleRate = 44100;
+  var outputSampleRate = 48000;
 
-    LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
-        converterType: converterType, // default SRC_SINC_FASTEST. see API for more
-    }).then((src) => {
-        var data = new Float32Array(44100);
-        let resampledData = src.full(data);
-        src.destroy(); // clean up
-    });
+  LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
+    converterType: converterType, // default SRC_SINC_FASTEST. see API for more
+  }).then((src) => {
+    var data = new Float32Array(44100);
+    let resampledData = src.full(data);
+    src.destroy(); // clean up
+  });
 </script>
 ```
 
@@ -144,10 +172,10 @@ let inputSampleRate = 44100;
 let outputSampleRate = 48000;
 
 create(nChannels, inputSampleRate, outputSampleRate).then((src) => {
-    let data = new Float32Array(44100);
-    let resampled48k = src.simple(data); // returns ~48000 samples
-    src.outputSampleRate = 96000;
-    let resampled96k = src.simple(data); // returns ~96000 samples
+  let data = new Float32Array(44100);
+  let resampled48k = src.simple(data); // returns ~48000 samples
+  src.outputSampleRate = 96000;
+  let resampled96k = src.simple(data); // returns ~96000 samples
 });
 ```
 
@@ -157,11 +185,11 @@ Converter types are as follows. More information can be found at the [libsampler
 
 ```javascript
 const ConverterType = {
-    SRC_SINC_BEST_QUALITY: 0, // highest quality, slowest
-    SRC_SINC_MEDIUM_QUALITY: 1, //
-    SRC_SINC_FASTEST: 2, // in-between
-    SRC_ZERO_ORDER_HOLD: 3, // poor quality, "blindingly" fast
-    SRC_LINEAR: 4, // poor quality, "blindingly" fast
+  SRC_SINC_BEST_QUALITY: 0, // highest quality, slowest
+  SRC_SINC_MEDIUM_QUALITY: 1, //
+  SRC_SINC_FASTEST: 2, // in-between
+  SRC_ZERO_ORDER_HOLD: 3, // poor quality, "blindingly" fast
+  SRC_LINEAR: 4, // poor quality, "blindingly" fast
 };
 ```
 

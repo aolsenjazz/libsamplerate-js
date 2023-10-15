@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Web Audio Library Example</title>
+	</head>
+	<button id="play">Play Sine Wave</button>
+	<p id="msg"></p>
+	<body>
+		<script>
+			async function initAudio() {
+				const audioContext = new AudioContext({sampleRate: 44100});
+				await audioContext.audioWorklet.addModule('processor.js');
+				await audioContext.audioWorklet.addModule(
+					'../../dist/libsamplerate.worklet.js' // or '@alexanderolsen/libsamplerate.worklet'
+				);
+
+				const oscillator = new OscillatorNode(audioContext);
+				const myProcessor = new AudioWorkletNode(audioContext, 'my-processor');
+				oscillator.connect(myProcessor).connect(audioContext.destination);
+				oscillator.start();
+			}
+
+			window.onload = initAudio;
+
+			const play = document.getElementById('play');
+			play.onclick = () => {
+				initAudio();
+			};
+		</script>
+	</body>
+</html>

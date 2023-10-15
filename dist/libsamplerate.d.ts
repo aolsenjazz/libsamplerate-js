@@ -1,8 +1,8 @@
 /**
  * The entry point into this library. All of the actual resampling work is handled in src.ts
  */
-import { SRC } from "./src";
-import { ConverterTypeValue, ConverterType } from "./converter-type";
+import { SRC } from './src';
+import { ConverterTypeValue, ConverterType } from './converter-type';
 /**
  * Options that can be passed to create() when obtaining a copy of SRC.
  */

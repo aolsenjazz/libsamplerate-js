@@ -70,8 +70,9 @@ LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
 // project.js
 const audioContext = new AudioContext({ sampleRate: 44100 });
 await audioContext.audioWorklet.addModule('processor.js');
+// You can also bundle libsamplerate.worklet.js with your own application; cnd link provided for convenience
 await audioContext.audioWorklet.addModule(
-  '@alexanderolsen/libsamplerate.worklet'
+  'https://cdn.jsdelivr.net/npm/@alexanderolsen/libsamplerate-js/dist/libsamplerate.worklet.js'
 );
 ```
 
@@ -83,6 +84,7 @@ let nChannels = 1;
 let inputSampleRate = 44100;
 let outputSampleRate = 16000; // or another target sample rate
 
+// somewhere in the declaration of your Processor:
 create(nChannels, inputSampleRate, outputSampleRate, {
   converterType: ConverterType.SRC_SINC_BEST_QUALITY, // or some other quality
 }).then((src) => {

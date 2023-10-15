@@ -82,6 +82,9 @@ function validate(
 		throw 'invalid converterType';
 }
 
+// Enables us to access this library in the `AudioWorkletGlobalScope` object via
+// globalThis.LibSampleRate. This library should be loaded into the `AudioWorkletGlobalScope`
+// with audioCtx.audioWorklet.addModule('@alexanderolsen/libsamplerate-js').
 if (globalThis.constructor.name === 'AudioWorkletGlobalScope') {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(globalThis as any).LibSampleRate = {

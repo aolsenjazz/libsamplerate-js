@@ -70,7 +70,7 @@ LibSampleRate.create(nChannels, inputSampleRate, outputSampleRate, {
 // project.js
 const audioContext = new AudioContext({ sampleRate: 44100 });
 await audioContext.audioWorklet.addModule('processor.js');
-// You can also bundle libsamplerate.worklet.js with your own application; cnd link provided for convenience
+// You can also bundle libsamplerate.worklet.js with your own application; cdn link provided for convenience
 await audioContext.audioWorklet.addModule(
   'https://cdn.jsdelivr.net/npm/@alexanderolsen/libsamplerate-js/dist/libsamplerate.worklet.js'
 );

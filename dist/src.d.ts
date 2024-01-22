@@ -1,5 +1,5 @@
-import { ModuleType } from "./module-type";
-import { ConverterTypeValue } from "./converter-type";
+import { ModuleType } from './module-type';
+import { ConverterTypeValue } from './converter-type';
 /**
  * Manages communication between WASM code and JS
  */
@@ -79,5 +79,5 @@ export declare class SRC {
      * @param dataOut if resampleFunc === this.module.full, pass an optional resuable buffer to avoid extra allocations
      * @returns The resampled audio, if any
      */
-    _resample(resampleFunc: ModuleType["simple"] | ModuleType["full"], dataIn: Float32Array, dataOut?: Float32Array | null): Float32Array;
+    _resample(resampleFunc: ModuleType['simple'] | ModuleType['full'], dataIn: Float32Array, dataOut?: Float32Array | null): Float32Array;
 }

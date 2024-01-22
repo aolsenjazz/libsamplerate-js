@@ -69,7 +69,7 @@ test('copyOrWriteArray with limited length copies only specified length', () => 
 });
 
 test('toFloat32 float32', () => {
-	let float32 = new Float32Array([1,2,3]);
+	let float32 = new Float32Array([1, 2, 3]);
 	let result = toFloat32(float32);
 	expect(JSON.stringify(result)).toBe(JSON.stringify(float32));
 });
@@ -118,6 +118,6 @@ test('toFloat32 Uint32', () => {
 
 test('toFloat32 Array throws', () => {
 	expect(() => {
-		toFloat32([1,2,3]);
+		toFloat32([1, 2, 3]);
 	}).toThrow('Unsupport data type function Array() { [native code] }');
-})
+});

@@ -1,6 +1,6 @@
-import { toChunks, copyOrWriteArray } from "./util";
-import { ModuleType } from "./module-type";
-import { ConverterTypeValue } from "./converter-type";
+import { toChunks, copyOrWriteArray } from './util';
+import { ModuleType } from './module-type';
+import { ConverterTypeValue } from './converter-type';
 
 /**
  * The length (in `float`s) of the input and output buffers used to transmit data between
@@ -98,7 +98,7 @@ export class SRC {
 	 */
 	destroy(): void {
 		if (this.isDestroyed === true) {
-			console.warn("destroy() has already been called on this instance");
+			console.warn('destroy() has already been called on this instance');
 		} else {
 			this.module.destroy();
 			this.isDestroyed = true;
@@ -209,7 +209,7 @@ export class SRC {
 	 * @returns The resampled audio, if any
 	 */
 	_resample(
-		resampleFunc: ModuleType["simple"] | ModuleType["full"],
+		resampleFunc: ModuleType['simple'] | ModuleType['full'],
 		dataIn: Float32Array,
 		dataOut: Float32Array | null = null
 	): Float32Array {
@@ -217,11 +217,12 @@ export class SRC {
 		if (this.inputSampleRate === this.outputSampleRate) return dataIn;
 
 		if (dataOut !== null && dataOut.length < this.ratio * dataIn.length)
-			throw "dataOut must be at least ceil(srcRatio * dataIn.length) samples long";
+			throw 'dataOut must be at least ceil(srcRatio * dataIn.length) samples long';
 
 		// if client is trying to resample a big piece of audio, process in chunks
 		const projectedSize = Math.ceil(dataIn.length * this.ratio);
-		if (projectedSize > BUFFER_LENGTH) return this._chunkAndResample(dataIn);
+		if (Math.max(projectedSize, dataIn.length) > BUFFER_LENGTH)
+			return this._chunkAndResample(dataIn);
 
 		this.sourceArray.set(dataIn);
 

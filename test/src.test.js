@@ -1,4 +1,4 @@
-import { SRC } from "SRC";
+import { SRC } from 'SRC';
 
 const BUFFER_SIZE = 1008000;
 
@@ -37,7 +37,7 @@ function module() {
 	};
 }
 
-test("simple() passes correct args to wasm backend", () => {
+test('simple() passes correct args to wasm backend', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -50,7 +50,7 @@ test("simple() passes correct args to wasm backend", () => {
 		outputSampleRate
 	);
 
-	const spy = jest.spyOn(src.module, "simple");
+	const spy = jest.spyOn(src.module, 'simple');
 	const data = new Float32Array(44100);
 
 	src.simple(data);
@@ -64,7 +64,7 @@ test("simple() passes correct args to wasm backend", () => {
 	);
 });
 
-test("full() passes correct args to wasm backend", () => {
+test('full() passes correct args to wasm backend', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -77,7 +77,7 @@ test("full() passes correct args to wasm backend", () => {
 		outputSampleRate
 	);
 
-	const spy = jest.spyOn(src.module, "full");
+	const spy = jest.spyOn(src.module, 'full');
 	const data = new Float32Array(44100);
 
 	src.full(data);
@@ -91,7 +91,7 @@ test("full() passes correct args to wasm backend", () => {
 	);
 });
 
-test("simple() w/200k samples calls src.module.full() 23 times", () => {
+test('simple() w/200k samples calls src.module.full() 23 times', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -104,7 +104,7 @@ test("simple() w/200k samples calls src.module.full() 23 times", () => {
 		outputSampleRate
 	);
 
-	const spy = jest.spyOn(src.module, "full");
+	const spy = jest.spyOn(src.module, 'full');
 	const data = new Float32Array(BUFFER_SIZE + nChannels);
 
 	src.simple(data);
@@ -112,7 +112,7 @@ test("simple() w/200k samples calls src.module.full() 23 times", () => {
 	expect(spy).toHaveBeenCalledTimes(115);
 });
 
-test("full() w/200k samples calls src.module.full() 23 times", () => {
+test('full() w/200k samples calls src.module.full() 23 times', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -125,7 +125,7 @@ test("full() w/200k samples calls src.module.full() 23 times", () => {
 		outputSampleRate
 	);
 
-	const spy = jest.spyOn(src.module, "full");
+	const spy = jest.spyOn(src.module, 'full');
 	const data = new Float32Array(BUFFER_SIZE + nChannels);
 
 	src.full(data);
@@ -133,7 +133,7 @@ test("full() w/200k samples calls src.module.full() 23 times", () => {
 	expect(spy).toHaveBeenCalledTimes(115);
 });
 
-test("destroy() calls module.destroy() + sets isDestroyed to true", () => {
+test('destroy() calls module.destroy() + sets isDestroyed to true', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -146,14 +146,14 @@ test("destroy() calls module.destroy() + sets isDestroyed to true", () => {
 		outputSampleRate
 	);
 
-	const spy = jest.spyOn(src.module, "destroy");
+	const spy = jest.spyOn(src.module, 'destroy');
 	src.destroy();
 
 	expect(spy).toHaveBeenCalledTimes(1);
 	expect(src.isDestroyed).toBe(true);
 });
 
-test("call destroy() twice warns the second time", () => {
+test('call destroy() twice warns the second time', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -168,7 +168,7 @@ test("call destroy() twice warns the second time", () => {
 
 	const consoleWarn = global.console.warn;
 	global.console = { warn: jest.fn() };
-	const spy = jest.spyOn(global.console, "warn");
+	const spy = jest.spyOn(global.console, 'warn');
 
 	src.destroy();
 	src.destroy();
@@ -178,7 +178,7 @@ test("call destroy() twice warns the second time", () => {
 	global.console = { warn: consoleWarn };
 });
 
-test("calling resample with inputSr===outputSr just returns dataIn", () => {
+test('calling resample with inputSr===outputSr just returns dataIn', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -198,7 +198,7 @@ test("calling resample with inputSr===outputSr just returns dataIn", () => {
 	expect(result).toBe(dataIn);
 });
 
-test("calling resample with dataOut.length < dataIn.length && ratio > 1 fails", () => {
+test('calling resample with dataOut.length < dataIn.length && ratio > 1 fails', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -217,11 +217,11 @@ test("calling resample with dataOut.length < dataIn.length && ratio > 1 fails", 
 	expect(() => {
 		src._resample(() => {}, dataIn, dataOut);
 	}).toThrow(
-		"dataOut must be at least ceil(srcRatio * dataIn.length) samples long"
+		'dataOut must be at least ceil(srcRatio * dataIn.length) samples long'
 	);
 });
 
-test("setting outputSampleRate sets src._outputSampleRate", () => {
+test('setting outputSampleRate sets src._outputSampleRate', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -239,7 +239,7 @@ test("setting outputSampleRate sets src._outputSampleRate", () => {
 	expect(src.inputSampleRate).toBe(96000);
 });
 
-test("setting inputSampleRate sets src._inputSampleRate", () => {
+test('setting inputSampleRate sets src._inputSampleRate', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -257,7 +257,7 @@ test("setting inputSampleRate sets src._inputSampleRate", () => {
 	expect(src.outputSampleRate).toBe(96000);
 });
 
-test("setting nChannels sets src._nChannels", () => {
+test('setting nChannels sets src._nChannels', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;
@@ -275,7 +275,7 @@ test("setting nChannels sets src._nChannels", () => {
 	expect(src.nChannels).toBe(1);
 });
 
-test("setting converterType sets src._converterType", () => {
+test('setting converterType sets src._converterType', () => {
 	let nChannels = 2;
 	let converterType = 0;
 	let inputSampleRate = 44100;

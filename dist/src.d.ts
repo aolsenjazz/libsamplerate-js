@@ -45,9 +45,12 @@ export declare class SRC {
      *
      * @param dataIn Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
      * @param dataOut Optionally, pass a Float32Array to avoid allocating an extra array for every resampling operation
+     * @param outLength if resampleFunc === this.module.full, pass an optional object get get the number of frames written to dataOut
      * @returns The resampled data. If dataOut != null, dataOut is returned
      */
-    full(dataIn: Float32Array, dataOut?: Float32Array | null): Float32Array;
+    full(dataIn: Float32Array, dataOut?: Float32Array | null, outLength?: {
+        frames: number;
+    } | null): Float32Array;
     /**
      * Cleans up WASM SRC resources. Once this is called on an instance, that instance must be
      * reinitialized with src.init() before it can be used again.
@@ -77,7 +80,10 @@ export declare class SRC {
      * @param resampleFunc this.module.simple || this.module.full
      * @param dataIn Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
      * @param dataOut if resampleFunc === this.module.full, pass an optional resuable buffer to avoid extra allocations
+     * @param outLength if resampleFunc === this.module.full, pass an optional object get get the number of frames written to dataOut
      * @returns The resampled audio, if any
      */
-    _resample(resampleFunc: ModuleType['simple'] | ModuleType['full'], dataIn: Float32Array, dataOut?: Float32Array | null): Float32Array;
+    _resample(resampleFunc: ModuleType['simple'] | ModuleType['full'], dataIn: Float32Array, dataOut?: Float32Array | null, outLength?: {
+        frames: number;
+    } | null): Float32Array;
 }

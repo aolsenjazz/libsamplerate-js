@@ -1,6 +1,6 @@
 {
   "name": "@alexanderolsen/libsamplerate-js",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Resample audio in node or browser using a webassembly port of libsamplerate.",
   "keywords": [
     "web assembly",

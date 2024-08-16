@@ -81,13 +81,15 @@ export class SRC {
 	 *
 	 * @param dataIn Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
 	 * @param dataOut Optionally, pass a Float32Array to avoid allocating an extra array for every resampling operation
+	 * @param outLength if resampleFunc === this.module.full, pass an optional object get get the number of frames written to dataOut
 	 * @returns The resampled data. If dataOut != null, dataOut is returned
 	 */
 	full(
 		dataIn: Float32Array,
-		dataOut: Float32Array | null = null
+		dataOut: Float32Array | null = null,
+		outLength: {frames: number} | null = null,
 	): Float32Array {
-		return this._resample(this.module.full, dataIn, dataOut);
+		return this._resample(this.module.full, dataIn, dataOut, outLength);
 	}
 
 	/**
@@ -206,12 +208,14 @@ export class SRC {
 	 * @param resampleFunc this.module.simple || this.module.full
 	 * @param dataIn Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
 	 * @param dataOut if resampleFunc === this.module.full, pass an optional resuable buffer to avoid extra allocations
+	 * @param outLength if resampleFunc === this.module.full, pass an optional object get get the number of frames written to dataOut
 	 * @returns The resampled audio, if any
 	 */
 	_resample(
 		resampleFunc: ModuleType['simple'] | ModuleType['full'],
 		dataIn: Float32Array,
-		dataOut: Float32Array | null = null
+		dataOut: Float32Array | null = null,
+		outLength: {frames: number} | null = null,
 	): Float32Array {
 		// if we don't actually need to resample, just copy values
 		if (this.inputSampleRate === this.outputSampleRate) return dataIn;
@@ -234,6 +238,10 @@ export class SRC {
 			this.inputSampleRate, // ignored by module.full()
 			this.outputSampleRate // ignored by module.full()
 		);
+
+		if (typeof outLength === 'object' && outLength !== null) {
+			outLength.frames = outputFrames;
+		}
 
 		return copyOrWriteArray(
 			outputFrames * this.nChannels,

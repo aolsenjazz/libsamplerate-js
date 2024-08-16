@@ -149,11 +149,14 @@ simple(dataIn) { ... }
  *
  * More (and better) info available at: http://www.mega-nerd.com/SRC/api_full.html
  *
- * @param  {Float32Array}         dataIn  Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
- * @param  {Float32Array || null} dataOut Optionally, pass a Float32Array to avoid allocating an extra array for every esampling operation
- * @return {Float32Array}                 The resampled data. If dataOut != null, dataOut is returned
+ * @param {Float32Array}      dataIn              Float32Array containing mono|interleaved audio data where -1 < dataIn[i] < 1
+ * @param {Float32Array|null} dataOut             Optionally, pass a Float32Array to avoid allocating an extra array for every esampling operation
+ * @param {Object|null}       outLength           Amount of data written to dataOut
+ * @param {number}            [outLength.frames]  The number of frames in the output
+
+ * @return {Float32Array} The resampled data. If dataOut != null, dataOut is returned
  */
-full(dataIn, dataOut=null) { ... }
+full(dataIn, dataOut=null, outLength = null) { ... }
 ```
 
 ### `destroy`

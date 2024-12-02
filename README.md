@@ -92,7 +92,7 @@ create(nChannels, inputSampleRate, outputSampleRate, {
 });
 ```
 
-See examples/worklet for a full implementation example. Configuring libsamplerate-js to work in `AudioWorklets` is less trival than it ought to be due to `AudioWorklet` limitations. _Note that typing support is not avaialble for LibSampleRate within the context of AudioWorklets._
+See examples/worklet for a full implementation example. Configuring libsamplerate-js to work in `AudioWorklets` is less trival than it ought to be due to `AudioWorklet` limitations. _Note that typing support is not available for LibSampleRate within the context of AudioWorklets._
 
 ### In HTML:
 

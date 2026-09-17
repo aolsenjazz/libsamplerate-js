@@ -53,8 +53,8 @@
   "author": "Alexander Olsen",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.12.10",
-    "@babel/preset-env": "^7.12.11",
+    "@babel/core": "^8.0.5",
+    "@babel/preset-env": "^8.0.5",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.1",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
